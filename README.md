@@ -81,3 +81,9 @@
 					-	<Brand> Update(int id, Brand brand)
 					-	<Brand> Delete(int id)
 
+	#TODO
+
+		- Create rest interfaces repos
+		- Create corresponding class repos
+
+		- setup database (dbContext, connectionstring etc.)
