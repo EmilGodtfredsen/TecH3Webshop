@@ -11,12 +11,14 @@ namespace TecH3Webshop.Api.Domain
     {
         [ForeignKey("Order.Id")]
         public int OrderId { get; set; }
-        [ForeignKey("Product.Id")]
-        public int ProductId { get; set; }
         [Required]
         public int Quantity { get; set; }
         [Required]
         public float Price { get; set; }
+
+        [ForeignKey("Product.Id")]
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
 
     }
 }

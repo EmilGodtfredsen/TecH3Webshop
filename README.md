@@ -1,6 +1,24 @@
-# Mandag d. 31/5-21
+# Tirsdag d.1/6-21
+	#TODO onsdag d. 2/6-21
 
-	* Created ER-overview
+		- Create repositories for Category, Product, Order and OrderDetail.
+		- Implement some repository tests
+
+	* Completed setup db with context
+	* connectionstring setup inside appsettings.json
+	* Modified login repository with GetByEmail method
+	* Created address repository
+	* Created brand repository
+
+
+# Mandag d. 31/5-21
+	#TODO tirsdag d.1/6-21
+
+		- Create rest interfaces repos
+		- Create corresponding class repos
+		- setup database (dbContext, connectionstring etc.)
+
+	* Created ER-overviews
 
 	# Basemodel
 		*	Id - int
@@ -63,7 +81,6 @@
 				-	<Order> Delete(int id)
 			* IOrderDetail
 					//Id refers to Order.Id
-					-	<List<OrderDetail>>  GetAll()
 					-	<OrderDetail> GetById(int id)
 					-	<OrderDetail> Create(OrderDetail orderDetail)
 					-	<OrderDetail> Update(int id, OrderDetail orderDetail)
@@ -74,16 +91,14 @@
 					-	<Product> Create(Product product)
 					-	<Product> Update(int id, Product product)
 					-	<Product> Delete(int id)
+			* ICategory
+					-   <List<Category>> GetAll()
+					-	<Category> Create(Category category)
+					-	<Category> Update(int id, Category category)
+					-	<Category> Delete(int id)
 			* IBrand
 					-	<List<Brand>> GetAll()
 					-	<Brand> GetById(int id)
 					-	<Brand> Create(Brand brand)
 					-	<Brand> Update(int id, Brand brand)
 					-	<Brand> Delete(int id)
-
-	#TODO
-
-		- Create rest interfaces repos
-		- Create corresponding class repos
-
-		- setup database (dbContext, connectionstring etc.)

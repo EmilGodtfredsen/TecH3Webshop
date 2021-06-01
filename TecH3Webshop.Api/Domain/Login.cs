@@ -8,6 +8,10 @@ namespace TecH3Webshop.Api.Domain
 {
     public class Login : BaseModel
     {
+        public Login()
+        {
+            Address = new Address();
+        }
         [Required]
         [StringLength(50, ErrorMessage = "Email cannot be longer than 50 chars!")]
         public string Email { get; set; }
@@ -22,5 +26,7 @@ namespace TecH3Webshop.Api.Domain
         public string LastName { get; set; }    
         [Required]
         public int Role { get; set; }
+
+        public Address Address { get; set; }
     }
 }
