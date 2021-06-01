@@ -6,7 +6,7 @@ using TecH3Webshop.Api.Domain;
 
 namespace TecH3Webshop.Api.Repositories
 {
-    public interface ILogin
+    public interface ILoginRepository
     {
         Task<List<Login>> GetAll();
         Task<Login> GetById(int id);

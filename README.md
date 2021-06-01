@@ -63,7 +63,6 @@
 				-	<Order> Delete(int id)
 			* IOrderDetail
 					//Id refers to Order.Id
-					-	<List<OrderDetail>>  GetAll()
 					-	<OrderDetail> GetById(int id)
 					-	<OrderDetail> Create(OrderDetail orderDetail)
 					-	<OrderDetail> Update(int id, OrderDetail orderDetail)
@@ -74,6 +73,11 @@
 					-	<Product> Create(Product product)
 					-	<Product> Update(int id, Product product)
 					-	<Product> Delete(int id)
+			* ICategory
+					-   <List<Category>> GetAll()
+					-	<Category> Create(Category category)
+					-	<Category> Update(int id, Category category)
+					-	<Category> Delete(int id)
 			* IBrand
 					-	<List<Brand>> GetAll()
 					-	<Brand> GetById(int id)

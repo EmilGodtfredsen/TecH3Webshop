@@ -6,7 +6,7 @@ using TecH3Webshop.Api.Domain;
 
 namespace TecH3Webshop.Api.Repositories
 {
-    interface IAddress
+    interface IAddressRepository
     {
         Task<Address> GetById(int id);
         Task<Address> Create(Address address);
