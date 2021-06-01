@@ -1,36 +1,72 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TecH3Webshop.Api.Database;
 using TecH3Webshop.Api.Domain;
 
 namespace TecH3Webshop.Api.Repositories
 {
     public class LoginRepository : ILoginRepository
     {
-        public Task<Login> Create(int id, Login login)
+        private readonly TecH3WebshopDbContext _context;
+        public LoginRepository(TecH3WebshopDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<Login> Delete(int id)
+        public async Task<List<Login>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Logins
+                .Where(l => l.DeletedAt == null)
+                .OrderBy(l => l.Email)
+                .OrderBy(l => l.FirstName)
+                .Include(l => l.Address).Where(a => a.DeletedAt == null)
+                .ToListAsync();
         }
 
-        public Task<List<Login>> GetAll()
+        public async Task<Login> GetByEmail(string email)
         {
-            throw new NotImplementedException();
+            return await _context.Logins
+                .Where(l => l.DeletedAt == null)
+                .Include(l => l.Address).Where(a => a.DeletedAt == null)
+                .FirstOrDefaultAsync(l => l.Email == email);
         }
 
-        public Task<Login> GetById(int id)
+        public async Task<Login> CreateLogin(Login login)
         {
-            throw new NotImplementedException();
+            login.CreatedAt = DateTime.Now;
+            _context.Logins.Add(login);
+            await _context.SaveChangesAsync();
+            return login;
         }
 
-        public Task<Login> Update(int id, Login login)
+
+        public async Task<Login> Update(string email, Login login)
         {
-            throw new NotImplementedException();
+            var updateLogin = await _context.Logins.FirstOrDefaultAsync(l => l.Email == email);
+            if(updateLogin != null)
+            {
+                updateLogin.UpdatedAt = DateTime.Now;
+                updateLogin.Email = login.Email;
+                updateLogin.FirstName = login.Email;
+                updateLogin.LastName = login.LastName;
+                updateLogin.Password = login.Password;
+                updateLogin.Role = login.Role;
+                updateLogin.Address = login.Address;
+            }
+            return updateLogin;
+        }
+        public async Task<Login> Delete(int id)
+        {
+            var login = await _context.Logins.FirstOrDefaultAsync(l => l.Id == id);
+            if(login != null)
+            {
+                login.DeletedAt = DateTime.Now;
+                await _context.SaveChangesAsync();
+            }
+            return login;
         }
     }
 }

@@ -9,9 +9,9 @@ namespace TecH3Webshop.Api.Repositories
     public interface ILoginRepository
     {
         Task<List<Login>> GetAll();
-        Task<Login> GetById(int id);
-        Task<Login> Create(int id, Login login);
-        Task<Login> Update(int id, Login login);
+        Task<Login> GetByEmail(string email);
+        Task<Login> CreateLogin(Login login);
+        Task<Login> Update(string email, Login login);
         Task<Login> Delete(int id);
 
     }

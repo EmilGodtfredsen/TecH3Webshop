@@ -1,6 +1,17 @@
-# Mandag d. 31/5-21
+# Tirsdag d.1/6-21
 
-	* Created ER-overview
+	* Completed setup db with context
+	* connectionstring setup inside appsettings.json
+	* 
+
+# Mandag d. 31/5-21
+	#TODO
+
+		- Create rest interfaces repos
+		- Create corresponding class repos
+
+		- setup database (dbContext, connectionstring etc.)
+	* Created ER-overviews
 
 	# Basemodel
 		*	Id - int
@@ -84,10 +95,3 @@
 					-	<Brand> Create(Brand brand)
 					-	<Brand> Update(int id, Brand brand)
 					-	<Brand> Delete(int id)
-
-	#TODO
-
-		- Create rest interfaces repos
-		- Create corresponding class repos
-
-		- setup database (dbContext, connectionstring etc.)
