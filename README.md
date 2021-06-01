@@ -1,16 +1,23 @@
 # Tirsdag d.1/6-21
+	#TODO onsdag d. 2/6-21
+
+		- Create repositories for Category, Product, Order and OrderDetail.
+		- Implement some repository tests
 
 	* Completed setup db with context
 	* connectionstring setup inside appsettings.json
-	* 
+	* Modified login repository with GetByEmail method
+	* Created address repository
+	* Created brand repository
+
 
 # Mandag d. 31/5-21
-	#TODO
+	#TODO tirsdag d.1/6-21
 
 		- Create rest interfaces repos
 		- Create corresponding class repos
-
 		- setup database (dbContext, connectionstring etc.)
+
 	* Created ER-overviews
 
 	# Basemodel
