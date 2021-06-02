@@ -12,11 +12,11 @@ namespace TecH3Webshop.Api.Domain
         {
             Address = new Address();
         }
-        [Required]
-        [StringLength(50, ErrorMessage = "Email cannot be longer than 50 chars!")]
+        [Required(ErrorMessage ="Field cannot be empty!")]
+        [EmailAddress(ErrorMessage = "Email is not valid!")]
         public string Email { get; set; }
         [Required]
-        [StringLength(10, ErrorMessage = "Password cannot be longer than 10 chars!")]
+        [MinLength(6, ErrorMessage = "Password must be atleast 6 chars long!")]
         public string Password { get; set; }
         [Required]
         [StringLength(32, ErrorMessage = "Firstname cannot be longer than 32 chars!")]
