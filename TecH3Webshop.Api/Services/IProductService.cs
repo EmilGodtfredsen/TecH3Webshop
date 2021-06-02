@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using TecH3Webshop.Api.Domain;
 
-namespace TecH3Webshop.Api.Repositories
+namespace TecH3Webshop.Api.Services
 {
-    public interface IProductRepository
+    public interface IProductService
     {
         Task<List<Product>> GetAll();
         Task<Product> GetById(int id);

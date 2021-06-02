@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using TecH3Webshop.Api.Domain;
 
-namespace TecH3Webshop.Api.Repositories
+namespace TecH3Webshop.Api.Services
 {
-    public interface ICategoryRepository
+    public interface ICategoryService
     {
         Task<List<Category>> GetAll();
         Task<Category> Create(Category category);
