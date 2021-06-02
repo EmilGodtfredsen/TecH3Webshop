@@ -34,7 +34,7 @@ namespace TecH3Webshop.Api.Repositories
                 .FirstOrDefaultAsync(l => l.Email == email);
         }
 
-        public async Task<Login> CreateLogin(Login login)
+        public async Task<Login> Create(Login login)
         {
             login.CreatedAt = DateTime.Now;
             _context.Logins.Add(login);

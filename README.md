@@ -1,3 +1,10 @@
+# Onsdag d.2/6-21
+
+	* Created rest repository interfaces and specific implementation of interfaces in repos
+	* Created Test project, added project reference to .Api from .Tests
+	* 
+	
+
 # Tirsdag d.1/6-21
 	#TODO onsdag d. 2/6-21
 
