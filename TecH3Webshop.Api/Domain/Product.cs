@@ -24,5 +24,9 @@ namespace TecH3Webshop.Api.Domain
 
         [Required]
         public int Quantity { get; set; }
+
+        public Category Category { get; set; }
+
+        public Brand Brand { get; set; }
     }
 }

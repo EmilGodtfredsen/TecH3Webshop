@@ -15,5 +15,6 @@ namespace TecH3Webshop.Api.Domain
         [Required]
         public DateTime OrderDate { get; set; } 
 
+        public Login Login { get; set; }
     }
 }

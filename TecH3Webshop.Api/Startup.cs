@@ -8,11 +8,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TecH3Webshop.Api.Database;
+using TecH3Webshop.Api.Repositories;
 
 namespace TecH3Webshop.Api
 {
@@ -31,6 +33,11 @@ namespace TecH3Webshop.Api
             services.AddDbContext<TecH3WebshopDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("MyConnection"))   // Points to appsettings where connection string is stored
                 );
+            services.AddScoped<ILoginRepository, LoginRepository>();
+            services.AddControllers()
+               .AddNewtonsoftJson(o =>
+               o.SerializerSettings.ReferenceLoopHandling =
+               ReferenceLoopHandling.Ignore);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
