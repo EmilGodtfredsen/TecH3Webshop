@@ -4,15 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using TecH3Webshop.Api.Domain;
 
-namespace TecH3Webshop.Api.Repositories
+namespace TecH3Webshop.Api.Services
 {
-    public interface IAddressRepository
+    public interface IAddressService
     {
         Task<Address> GetById(int id);
         Task<Address> Create(Address address);
         Task<Address> Update(int id, Address address);
         Task<Address> Delete(int id);
-
 
     }
 }
