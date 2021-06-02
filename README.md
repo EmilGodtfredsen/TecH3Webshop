@@ -8,6 +8,7 @@
 	* Created Test project, added project reference to .Api from .Tests
 	* Implemented validation for email on login repo
 	* Implemented validation for minimum length of 6 chars on password, login repo
+	* Fixed git issue
 	
 
 # Tirsdag d.1/6-21
