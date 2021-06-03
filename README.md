@@ -1,7 +1,7 @@
 # Torsdag d.3/6-21
 	#TODO fredag d.4/6-21
 		- Make email unique on login entity
-		- Finish picture entity
+		- Create controllers for picture, product, brand and category
 		- 
 
 	* On client installed react-router: npm install --save react-router
