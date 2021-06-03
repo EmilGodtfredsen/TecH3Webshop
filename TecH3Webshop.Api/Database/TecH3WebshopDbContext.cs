@@ -21,5 +21,7 @@ namespace TecH3Webshop.Api.Database
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<OrderDetail> OrderDetails { get; set; }
+
+        public DbSet<Picture> Pictures { get; set; }
     }
 }

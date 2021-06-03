@@ -1,0 +1,233 @@
+/* Table fit content */
+table.table-fit {
+	width: auto !important;
+	table-layout: auto !important;
+}
+table.table-fit thead th, table.table-fit tfoot th {
+	width: auto !important;
+}
+table.table-fit tbody td, table.table-fit tfoot td {
+	width: auto !important;
+}
+
+/* Login dialog */
+.login {
+	width: 28rem;
+}
+
+/* Header */
+
+.logo {
+	width: 250px;
+}
+
+/* Background colors */
+
+.bg-green {
+	background-color: rgb(0, 88, 61) !important;
+}
+
+.bg-blue {
+	background-color: rgb(0, 65, 114) !important;
+}
+
+.bg-yellow {
+	background: rgb(251, 176, 64) !important;
+}
+
+.bg-red {
+	background-color: rgb(217, 83, 79, 40%) !important;
+}
+
+/* Text */
+
+.title {
+	color: rgb(0, 65, 114);
+}
+
+/* Jumbotron and Card */
+
+
+.jumbotron {
+	padding: 10px;
+	margin: 0 0 15px 0;
+	border: 1px solid #DDDDDD;
+}
+
+.card-header-small {
+	padding: 5px;
+}
+
+
+.card,
+.jumbotron {
+	box-shadow: 0 0 8px -4px #111111;
+	min-width: 200px;
+}
+
+.card-deck{
+	margin-bottom: 15px;
+}
+/* Sidebar */
+/* =========================================== */
+
+/* Wrapper for sidebar and content */
+#wrapper {
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+/* #wrapper.toggled {
+	padding-left: 250px;
+}
+
+#wrapper.toggled {
+	padding-left: 0;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+	width: 250px;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+	width: 0;
+}
+
+#wrapper.toggled #page-content-wrapper {
+	position: absolute;
+	margin-left: -200px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+	position: relative;
+	margin-left: 0;
+} */
+
+/* Sidebar */
+#sidebar-wrapper {
+	z-index: 1000;
+	position: fixed;
+	left: 250px;
+	width: 0;
+	height: 100%;
+	margin-left: -250px;
+	overflow-y: auto;
+	background: #000;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+/* #page-content-wrapper {
+	width: 100%;
+	position: absolute;
+	padding: 15px;
+} */
+
+/* Page content */
+#page-content-wrapper {
+	padding: 20px;
+	position: relative;
+}
+
+/* Sidebar items */
+.sidebar-nav {
+	position: absolute;
+	top: 0;
+	width: 250px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* Height of sidebar item */
+.sidebar-nav li {
+	line-height: 40px;
+}
+
+/* Black sidebar item when mouse is not over */
+.sidebar-nav li div {
+	display: block;
+	text-decoration: none;
+	color: #999999;
+	cursor: pointer;
+	padding-top: 9px;
+	padding-bottom: 9px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+/* Red sidebar item when mouse is over */
+.sidebar-nav li div:hover {
+	text-decoration: none;
+	color: #fff;
+	background: rgba(255, 0, 0, 0.8);
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+/* .sidebar-nav li div:active,
+.sidebar-nav li div:focus {
+	text-decoration: none;
+} */
+
+/* Size of brand/logo area in sidebar */
+.sidebar-nav .sidebar-brand {
+	height: 55px;
+}
+
+/* .sidebar-nav>.sidebar-brand a {
+	color: #999999;
+}
+
+.sidebar-nav>.sidebar-brand a:hover {
+	color: #fff;
+	background: none;
+} */
+
+/* Active sidebar item */
+/* .active {
+	text-decoration: none;
+	color: #fff;
+	background: rgba(255, 0, 0, 0.8);
+} */
+
+/* Large sidebar when document width is large */
+@media (min-width : 768px) {
+	#wrapper {
+		padding-left: 250px;
+	}
+
+	#sidebar-wrapper {
+		width: 250px;
+	}
+
+	.sidebar-nav .sidebar-brand {
+		text-indent: 20px;
+	}
+}
+
+/* Small sidebar when document width is small */
+@media (max-width : 768px) {
+	#wrapper {
+		padding-left: 55px;
+	}
+
+	#sidebar-wrapper {
+		width: 55px;
+	}
+
+	.sidebar-nav .sidebar-brand {
+		text-indent: 15px;
+	}
+}
+
+/* =========================================== */

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TecH3Webshop.Api.Database;
 
 namespace TecH3Webshop.Api.Migrations
 {
     [DbContext(typeof(TecH3WebshopDbContext))]
-    partial class TecH3WebshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210603110523_Pictureentityadded")]
+    partial class Pictureentityadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,7 +256,7 @@ namespace TecH3Webshop.Api.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Pictures");
+                    b.ToTable("Picture");
                 });
 
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Product", b =>
