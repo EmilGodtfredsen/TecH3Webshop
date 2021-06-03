@@ -9,6 +9,10 @@ namespace TecH3Webshop.Api.Domain
 {
     public class Product : BaseModel
     {
+        public Product()
+        {
+            Pictures = new List<Picture>();
+        }
         [Required]
         [StringLength(32, ErrorMessage = "Product name cannot be longet than 32 chars!")]
         public string Name { get; set; }
@@ -19,6 +23,9 @@ namespace TecH3Webshop.Api.Domain
         [ForeignKey("Category.Id")]
         public int CategoryId { get; set; }
 
+        [ForeignKey("Picture.Id")]
+        public int PictureId { get; set; }
+
         [Required]
         public float Price { get; set; }
 
@@ -28,5 +35,7 @@ namespace TecH3Webshop.Api.Domain
         public Category Category { get; set; }
 
         public Brand Brand { get; set; }
+
+        public List<Picture> Pictures { get; set; }
     }
 }

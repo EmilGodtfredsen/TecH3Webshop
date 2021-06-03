@@ -1,3 +1,19 @@
+# Torsdag d.3/6-21
+	#TODO fredag d.4/6-21
+		- Make email unique on login entity
+		- Create controllers for picture, product, brand and category
+		- Display categories and products in client
+
+	* On client installed react-router: npm install --save react-router
+	* On client installed react-bootstrap: npm install react-bootstrap bootstrap@4.6.0
+	* On client installed fontawesome: 
+		- npm i --save @fortawesome/fontawesome-svg-core
+		- npm install --save @fortawesome/free-solid-svg-icons
+		- npm install --save @fortawesome/react-fontawesome
+		- npm install --save @fortawesome/free-brands-svg-icons
+		- npm install --save @fortawesome/free-regular-svg-icons
+	* On client installed axios: npm install --save axios
+
 # Onsdag d.2/6-21
 	#TODO torsdag d.3/6-21
 		

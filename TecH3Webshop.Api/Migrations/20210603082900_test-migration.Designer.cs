@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TecH3Webshop.Api.Database;
 
 namespace TecH3Webshop.Api.Migrations
 {
     [DbContext(typeof(TecH3WebshopDbContext))]
-    partial class TecH3WebshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210603082900_test-migration")]
+    partial class testmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,36 +229,6 @@ namespace TecH3Webshop.Api.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("TecH3Webshop.Api.Domain.Picture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CoverImagePath")
-                        .HasMaxLength(260)
-                        .HasColumnType("nvarchar(260)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Pictures");
-                });
-
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -280,9 +252,6 @@ namespace TecH3Webshop.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
-
-                    b.Property<int>("PictureId")
-                        .HasColumnType("int");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
@@ -334,13 +303,6 @@ namespace TecH3Webshop.Api.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("TecH3Webshop.Api.Domain.Picture", b =>
-                {
-                    b.HasOne("TecH3Webshop.Api.Domain.Product", null)
-                        .WithMany("Pictures")
-                        .HasForeignKey("ProductId");
-                });
-
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Product", b =>
                 {
                     b.HasOne("TecH3Webshop.Api.Domain.Brand", "Brand")
@@ -368,11 +330,6 @@ namespace TecH3Webshop.Api.Migrations
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Login", b =>
                 {
                     b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("TecH3Webshop.Api.Domain.Product", b =>
-                {
-                    b.Navigation("Pictures");
                 });
 #pragma warning restore 612, 618
         }

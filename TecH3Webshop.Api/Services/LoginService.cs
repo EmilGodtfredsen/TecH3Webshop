@@ -29,7 +29,7 @@ namespace TecH3Webshop.Api.Services
         public async Task<Login> Create(Login login)
         {
             var newLogin = await _loginRepository.Create(login);
-            return login;
+            return newLogin;
         }
         public async Task<Login> Update(string email, Login login)
         {

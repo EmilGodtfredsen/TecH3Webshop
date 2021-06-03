@@ -1,0 +1,9 @@
+{
+  "name": "tec-h3-webshop.client",
+  "version": "0.0.0",
+  "description": "TecH3Webshop.Client",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  }
+}
