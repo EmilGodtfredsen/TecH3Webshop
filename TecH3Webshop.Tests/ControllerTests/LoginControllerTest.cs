@@ -131,7 +131,6 @@ namespace TecH3Webshop.Tests.ControllerTests
             var statusCodeResult = (IStatusCodeActionResult)res;
             Assert.Equal(404, statusCodeResult.StatusCode);
         }
-
         [Fact]
         public async Task CreateLogin_ShouldReturnStatusCode200Ok_WhenLoginSuccessfullyCreated()
         {

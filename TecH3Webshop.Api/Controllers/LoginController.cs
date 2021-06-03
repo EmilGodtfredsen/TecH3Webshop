@@ -50,7 +50,7 @@ namespace TecH3Webshop.Api.Controllers
 
         [HttpGet("{email}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get([FromRoute] string email)
         {
