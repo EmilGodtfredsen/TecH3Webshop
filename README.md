@@ -1,8 +1,9 @@
 # Onsdag d.2/6-21
 	#TODO torsdag d.3/6-21
 		
-		- 
-		- 
+		- Finish tests for login service 1 hour
+		- Create controllers for all entities
+			- If time start up controller test
 
 	* Created rest repository interfaces and specific implementation of interfaces in repos
 	* Created Test project, added project reference to .Api from .Tests
