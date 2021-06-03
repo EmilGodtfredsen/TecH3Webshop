@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Home } from './Home'
+import { Home } from '../Home';
+import { Categories } from '../Categories';
 
 export default class Navigation extends Component {
     constructor(props) {
@@ -22,6 +23,13 @@ export default class Navigation extends Component {
             case 'home':
                 return (
                     <Home
+                    baseURL={this.props.baseURL}
+                    />
+                );
+                case 'categories':
+                return (
+                    <Categories
+                    baseURL={this.props.baseURL}
                     />
                 );
         }
@@ -39,15 +47,9 @@ export default class Navigation extends Component {
                             </div>
                         </li>
                         <li className="nav-item">
-                            <div onClick={() => this.setMenuItem('home')}>
-                                <FontAwesomeIcon icon="cog" fixedWidth />
-                                <span className="d-none d-md-inline"> Categories</span>
-                            </div>
-                        </li>
-                        <li className="nav-item">
-                            <div onClick={() => this.setMenuItem('home')}>
+                            <div onClick={() => this.setMenuItem('categories')}>
                                 <FontAwesomeIcon icon="glass-martini-alt" fixedWidth />
-                                <span className="d-none d-md-inline"> Products</span>
+                                <span className="d-none d-md-inline"> Categories</span>
                             </div>
                         </li>
                         <li className="nav-item">

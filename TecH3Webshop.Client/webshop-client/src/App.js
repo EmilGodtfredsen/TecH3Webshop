@@ -3,7 +3,7 @@ import React from 'react'
 import Navigation from './Components/Common/Navigation';
 
 
-const BASE_URL = '';
+const BASE_URL = 'https://localhost:5001/api/';
 
 
 export default class App extends React.Component {
@@ -12,9 +12,6 @@ export default class App extends React.Component {
     return (
 
       <>
-          <title>{this.title}</title>
-          <html className="" />
-          <body className="bg-secondary" />
         <Navigation
           baseURL={BASE_URL}
         />
