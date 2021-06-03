@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TecH3Webshop.Api.Database;
 using TecH3Webshop.Api.Repositories;
+using TecH3Webshop.Api.Services;
 
 namespace TecH3Webshop.Api
 {
@@ -25,20 +26,32 @@ namespace TecH3Webshop.Api
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // CORS configuration needed in order to allow angular app to communicate with server
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                    });
+            });
             services.AddDbContext<TecH3WebshopDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("MyConnection"))   // Points to appsettings where connection string is stored
                 );
             services.AddScoped<ILoginRepository, LoginRepository>();
+            services.AddScoped<ILoginService, LoginService>();
             services.AddControllers()
                .AddNewtonsoftJson(o =>
                o.SerializerSettings.ReferenceLoopHandling =
                ReferenceLoopHandling.Ignore);
-            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TecH3Webshop.Api", Version = "v1" });
@@ -58,6 +71,8 @@ namespace TecH3Webshop.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
