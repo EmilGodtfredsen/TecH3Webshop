@@ -1,10 +1,14 @@
 # Fredag d.4/6-21
 	#TODO mandag d.7/6-21
 		- Add description attribute for product entity
-
+		- Display product details in react app
+		- Create add to basket func.
 
 	* Set Login.Email as unique constraint
 	* Created controllers for product, brand and category
+	* On client added react-router-dom: npm install --save react-router-dom
+	* Displays Categories and products to each category
+
 
 # Torsdag d.3/6-21
 	#TODO fredag d.4/6-21

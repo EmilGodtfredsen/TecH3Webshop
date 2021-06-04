@@ -2,12 +2,15 @@ import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Home } from '../Home';
 import { Categories } from '../Categories';
+import { Products } from '../Products';
+
 
 export default class Navigation extends Component {
     constructor(props) {
         super(props)
         this.state = {
             menuItem: '',
+            content: '',
         }
     }
 
@@ -16,20 +19,32 @@ export default class Navigation extends Component {
             menuItem: menuItem,
         });
     }
-
+    handleCallback(content, menuItem) {
+        this.setState({
+            menuItem: menuItem,
+            content: content,
+        })
+    }
     content() {
         switch (this.state.menuItem) {
             default:
             case 'home':
                 return (
                     <Home
-                    baseURL={this.props.baseURL}
+                        baseURL={this.props.baseURL}
                     />
                 );
-                case 'categories':
+            case 'categories':
                 return (
                     <Categories
-                    baseURL={this.props.baseURL}
+                        baseURL={this.props.baseURL}
+                        handleCallback={this.handleCallback.bind(this)}
+                    />
+                );
+            case 'products':
+                return (
+                    <Products
+                        products={this.state.content}
                     />
                 );
         }
@@ -38,6 +53,7 @@ export default class Navigation extends Component {
     render() {
         return (
             <div id="wrapper">
+
                 <div id="sidebar-wrapper">
                     <ul className="sidebar-nav">
                         <li className="nav-item">
@@ -48,7 +64,7 @@ export default class Navigation extends Component {
                         </li>
                         <li className="nav-item">
                             <div onClick={() => this.setMenuItem('categories')}>
-                                <FontAwesomeIcon icon="glass-martini-alt" fixedWidth />
+                                <FontAwesomeIcon icon="cat" fixedWidth />
                                 <span className="d-none d-md-inline"> Categories</span>
                             </div>
                         </li>
@@ -78,6 +94,7 @@ export default class Navigation extends Component {
                     </div>
                 </div>
             </div>
+
         );
     }
 }
