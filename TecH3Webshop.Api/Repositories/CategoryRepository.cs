@@ -20,6 +20,7 @@ namespace TecH3Webshop.Api.Repositories
         {
             return await _context.Categories
                 .Where(c => c.DeletedAt == null)
+                .Include(c => c.Products.Where(p => p.DeletedAt == null))
                 .ToListAsync();
         }
 

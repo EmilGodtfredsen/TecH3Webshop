@@ -1,12 +1,15 @@
 # Fredag d.4/6-21
-	
+	#TODO mandag d.7/6-21
+		- Add description attribute for product entity
+
+
 	* Set Login.Email as unique constraint
-	* 
+	* Created controllers for product, brand and category
 
 # Torsdag d.3/6-21
 	#TODO fredag d.4/6-21
 		- Make email unique on login entity
-		- Create controllers for picture, product, brand and category
+		- Create controllers for product, brand and category
 		- Display categories and products in client
 
 	* On client installed react-router: npm install --save react-router

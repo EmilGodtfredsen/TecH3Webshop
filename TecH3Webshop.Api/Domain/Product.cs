@@ -23,9 +23,6 @@ namespace TecH3Webshop.Api.Domain
         [ForeignKey("Category.Id")]
         public int CategoryId { get; set; }
 
-        [ForeignKey("Images.Id")]
-        public int ImageId { get; set; }
-
         [Required]
         public float Price { get; set; }
 
