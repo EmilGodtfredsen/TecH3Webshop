@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TecH3Webshop.Api.Domain
 {
-    public class Picture : BaseModel
+    public class Image : BaseModel
     {
         [MaxLength(260)]
-        public string CoverImagePath { get; set; }
+        public string ImagePath { get; set; }
     }
 }

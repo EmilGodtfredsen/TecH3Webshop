@@ -48,6 +48,12 @@ namespace TecH3Webshop.Api
                 );
             services.AddScoped<ILoginRepository, LoginRepository>();
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped<IBrandService, BrandService>();
             services.AddControllers()
                .AddNewtonsoftJson(o =>
                o.SerializerSettings.ReferenceLoopHandling =

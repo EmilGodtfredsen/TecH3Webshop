@@ -1,3 +1,8 @@
+# Fredag d.4/6-21
+	
+	* Set Login.Email as unique constraint
+	* 
+
 # Torsdag d.3/6-21
 	#TODO fredag d.4/6-21
 		- Make email unique on login entity
