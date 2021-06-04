@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TecH3Webshop.Api.Database;
 
 namespace TecH3Webshop.Api.Migrations
 {
     [DbContext(typeof(TecH3WebshopDbContext))]
-    partial class TecH3WebshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210604075709_addeduniqueConstraintForEmail")]
+    partial class addeduniqueConstraintForEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,7 +140,7 @@ namespace TecH3Webshop.Api.Migrations
                         .HasMaxLength(260)
                         .HasColumnType("nvarchar(260)");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -279,6 +281,9 @@ namespace TecH3Webshop.Api.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(32)
@@ -295,7 +300,8 @@ namespace TecH3Webshop.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId");
+                    b.HasIndex("BrandId")
+                        .IsUnique();
 
                     b.HasIndex("CategoryId");
 
@@ -315,9 +321,7 @@ namespace TecH3Webshop.Api.Migrations
                 {
                     b.HasOne("TecH3Webshop.Api.Domain.Product", null)
                         .WithMany("Images")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Order", b =>
@@ -345,13 +349,13 @@ namespace TecH3Webshop.Api.Migrations
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Product", b =>
                 {
                     b.HasOne("TecH3Webshop.Api.Domain.Brand", "Brand")
-                        .WithMany("Products")
-                        .HasForeignKey("BrandId")
+                        .WithOne("Product")
+                        .HasForeignKey("TecH3Webshop.Api.Domain.Product", "BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TecH3Webshop.Api.Domain.Category", "Category")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -363,12 +367,7 @@ namespace TecH3Webshop.Api.Migrations
 
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Brand", b =>
                 {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("TecH3Webshop.Api.Domain.Category", b =>
-                {
-                    b.Navigation("Products");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Login", b =>

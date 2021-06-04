@@ -10,6 +10,14 @@ namespace TecH3Webshop.Api.Database
         public TecH3WebshopDbContext(DbContextOptions<TecH3WebshopDbContext> options):base(options){}
         public DbSet<Login> Logins { get; set; }
 
+        // realizes a unique constraint for Login.Email
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Login>()
+                .HasAlternateKey(l => l.Email)
+                .HasName("AlternateKey_Email");
+        }
+
         public DbSet<Address> Addresses { get; set; }
 
         public DbSet<Brand> Brands { get; set; }
@@ -22,6 +30,6 @@ namespace TecH3Webshop.Api.Database
 
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
-        public DbSet<Picture> Pictures { get; set; }
+        public DbSet<Image> Images { get; set; }
     }
 }

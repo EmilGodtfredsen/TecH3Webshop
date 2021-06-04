@@ -8,9 +8,15 @@ namespace TecH3Webshop.Api.Domain
 {
     public class Category : BaseModel
     {
+        public Category()
+        {
+            Products = new List<Product>();
+        }
         [Required]
         [StringLength(32, ErrorMessage = "Category name cannot be longet than 32 chars!")]
 
         public string Name { get; set; }
+
+        public List<Product> Products { get; set; }
     }
 }

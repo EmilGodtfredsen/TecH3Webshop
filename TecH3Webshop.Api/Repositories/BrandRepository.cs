@@ -20,7 +20,7 @@ namespace TecH3Webshop.Api.Repositories
         {
             return await _context.Brands
                 .Where(b => b.DeletedAt == null)
-                .Include(b => b.Product).Where(b => b.Product.DeletedAt == null)
+                .Include(b => b.Products.Where(p => p.DeletedAt == null))
                 .ToListAsync();
         }
 
@@ -28,7 +28,7 @@ namespace TecH3Webshop.Api.Repositories
         {
             return await _context.Brands
                 .Where(b => b.DeletedAt == null)
-                .Include(b => b.Product).Where(b => b.Product.DeletedAt == null)
+                .Include(b => b.Products.Where(p => p.DeletedAt == null))
                 .FirstOrDefaultAsync();
         }       
         public async Task<Brand> Create(Brand brand)
