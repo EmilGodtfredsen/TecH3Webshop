@@ -3,6 +3,7 @@ import axios from 'axios';
 import Utils from './Common/Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Row, Col, ListGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 
 export class Categories extends Component {
@@ -43,9 +44,7 @@ export class Categories extends Component {
             this.handleAlert(Utils.handleAxiosError(error), 'danger')
         })
     }
-    showProducts = (products) => {
-        this.props.handleCallback(products, 'products')
-    }
+   
     renderCategories() {
         if (this.state.categories === undefined) {
             return (
@@ -62,7 +61,7 @@ export class Categories extends Component {
                 <ListGroup>
                     {this.state.categories.map((val, i) => {
                         return(
-                        <ListGroup.Item key={i} action onClick={() => this.showProducts(val.products)}>
+                        <ListGroup.Item as={Link} action key={i} to={{ pathname: "/products", state: val}} >
                             {val.name}
                         </ListGroup.Item>
                         )
