@@ -58,7 +58,6 @@ table.table-fit tbody td, table.table-fit tfoot td {
 	padding: 5px;
 }
 
-
 .card,
 .jumbotron {
 	box-shadow: 0 0 8px -4px #111111;
@@ -80,31 +79,6 @@ table.table-fit tbody td, table.table-fit tfoot td {
 	transition: all 0.5s ease;
 }
 
-/* #wrapper.toggled {
-	padding-left: 250px;
-}
-
-#wrapper.toggled {
-	padding-left: 0;
-}
-
-#wrapper.toggled #sidebar-wrapper {
-	width: 250px;
-}
-
-#wrapper.toggled #sidebar-wrapper {
-	width: 0;
-}
-
-#wrapper.toggled #page-content-wrapper {
-	position: absolute;
-	margin-left: -200px;
-}
-
-#wrapper.toggled #page-content-wrapper {
-	position: relative;
-	margin-left: 0;
-} */
 
 /* Sidebar */
 #sidebar-wrapper {
@@ -123,17 +97,14 @@ table.table-fit tbody td, table.table-fit tfoot td {
 	transition: all 0.5s ease;
 }
 
-/* #page-content-wrapper {
-	width: 100%;
-	position: absolute;
-	padding: 15px;
-} */
-
 /* Page content */
 #page-content-wrapper {
 	padding: 20px;
 	position: relative;
 }
+.container {
+	columns: 2 auto;
+  }
 
 /* Sidebar items */
 .sidebar-nav {
@@ -143,15 +114,21 @@ table.table-fit tbody td, table.table-fit tfoot td {
 	margin: 0;
 	padding: 0;
 	list-style: none;
+	text-decoration: none;
+}
+
+.nav-item{
+	text-decoration: none;
 }
 
 /* Height of sidebar item */
-.sidebar-nav li {
+.sidebar-nav a {
 	line-height: 40px;
+	text-decoration: none;
 }
 
 /* Black sidebar item when mouse is not over */
-.sidebar-nav li div {
+.sidebar-nav a div {
 	display: block;
 	text-decoration: none;
 	color: #999999;
@@ -163,7 +140,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
 }
 
 /* Red sidebar item when mouse is over */
-.sidebar-nav li div:hover {
+.sidebar-nav a div:hover {
 	text-decoration: none;
 	color: #fff;
 	background: rgba(255, 0, 0, 0.8);
@@ -174,31 +151,16 @@ table.table-fit tbody td, table.table-fit tfoot td {
 	transition: all 0.3s ease;
 }
 
-/* .sidebar-nav li div:active,
-.sidebar-nav li div:focus {
+ .sidebar-nav a div:active,
+.sidebar-nav a div:focus {
 	text-decoration: none;
-} */
+} 
 
 /* Size of brand/logo area in sidebar */
 .sidebar-nav .sidebar-brand {
 	height: 55px;
 }
 
-/* .sidebar-nav>.sidebar-brand a {
-	color: #999999;
-}
-
-.sidebar-nav>.sidebar-brand a:hover {
-	color: #fff;
-	background: none;
-} */
-
-/* Active sidebar item */
-/* .active {
-	text-decoration: none;
-	color: #fff;
-	background: rgba(255, 0, 0, 0.8);
-} */
 
 /* Large sidebar when document width is large */
 @media (min-width : 768px) {

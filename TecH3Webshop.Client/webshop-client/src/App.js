@@ -1,29 +1,57 @@
-import React from 'react'
-//import Utils from './Components/Common/Utils.js'
+
+import React, { useState, useEffect } from 'react';
 import Navigation from './Components/Common/Navigation';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Home } from './Components/Home';
+import { Categories } from './Components/Categories';
+import Products from './Components/Products';
+import Product from './Components/Product';
+import Checkout from './Components/Checkout';
 
 const BASE_URL = 'https://localhost:5001/api/';
 
+function App() {
+  const [cart, setCart] = useState([]);
+  
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart))
+  }, [cart])
 
-export default class App extends React.Component {
+  const getCartTotal = () => {
+    return cart.reduce(
+      (sum, { quantity }) => sum + quantity,
+      0
+    );
+  };
 
-  render() {
-    return (
-      <>
-        <div className="nav-bar">
-          <Navigation
-            baseURL={BASE_URL}
-          />
+  return (
+    <div id="wrapper">
+
+      <Router>
+        <Navigation
+          baseURL={BASE_URL}
+        />
+        <div id="page-content-wrapper">
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/products">
+              <Products />
+            </Route>
+            <Route path="/categories">
+              <Categories baseURL={BASE_URL} />
+            </Route>
+            <Route path="/product">
+              <Product cart={cart} setCart={setCart} />
+            </Route>
+            <Route path="/checkout">
+              <Checkout getCartTotal={getCartTotal}/>
+            </Route>
+          </Switch>
         </div>
-        <div className="content">
-          <Router>
-              
-          </Router>
-        </div>
-
-      </>
-
-    )
-  }
+      </Router>
+    </div>
+  )
 }
+export default App;
