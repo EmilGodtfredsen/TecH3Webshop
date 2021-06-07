@@ -1,6 +1,7 @@
 import React from 'react'
-import { Col, ListGroup, Row } from 'react-bootstrap';
+import { Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { useLocation } from 'react-router'
+import { Link } from 'react-router-dom';
 
 const Products = () => {
     let location = useLocation();
@@ -10,19 +11,26 @@ const Products = () => {
         )
     } else {
         return (
-            <ListGroup>
+            <Container>
+
                 {location.state.products.map((val, i) => {
                     return (
-                        <Row>
-                            <Col className="col-6">
-                                <ListGroup.Item action key={i}>
-                                    {val.name}
-                                </ListGroup.Item>
+                        <div key={i}>
+
+                            <Col>
+                                <Row>
+                                    <Col>
+                                        <ListGroup.Item as={Link} action to={{ pathname: `/product/${val.id}`, state: val }}>
+                                            {val.name}
+                                        </ListGroup.Item>
+                                    </Col>
+                                </Row>
                             </Col>
-                        </Row>
+
+                        </div>
                     )
                 })}
-            </ListGroup>
+            </Container>
         )
     }
 }

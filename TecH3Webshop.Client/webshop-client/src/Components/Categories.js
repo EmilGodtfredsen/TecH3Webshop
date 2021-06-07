@@ -44,7 +44,7 @@ export class Categories extends Component {
             this.handleAlert(Utils.handleAxiosError(error), 'danger')
         })
     }
-   
+
     renderCategories() {
         if (this.state.categories === undefined) {
             return (
@@ -60,10 +60,10 @@ export class Categories extends Component {
             return (
                 <ListGroup>
                     {this.state.categories.map((val, i) => {
-                        return(
-                        <ListGroup.Item as={Link} action key={i} to={{ pathname: "/products", state: val}} >
-                            {val.name}
-                        </ListGroup.Item>
+                        return (
+                            <ListGroup.Item as={Link} action key={i} to={{ pathname: `/products/category/${val.id}`, state: val }}>
+                                {val.name}
+                            </ListGroup.Item>
                         )
                     })}
                 </ListGroup>
@@ -77,7 +77,7 @@ export class Categories extends Component {
                     <Col>
                         <div className="text-uppercase title">
                             <div className="p-2 font-weight-bold d-flex"> Categories
-                                <FontAwesomeIcon icon='cat' size='lg' className='ml-auto' fixedWidth />
+                            <FontAwesomeIcon icon='cat' size='lg' className='ml-auto' fixedWidth />
                             </div>
                         </div>
                     </Col>
@@ -89,6 +89,7 @@ export class Categories extends Component {
                     </Col>
                 </Row>
             </>
-        );
+
+        )
     }
 }
