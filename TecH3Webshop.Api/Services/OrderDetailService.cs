@@ -25,9 +25,9 @@ namespace TecH3Webshop.Api.Services
             var orderDetail = await _orderDetailsRepository.GetById(id);
             return orderDetail;
         }
-        public async Task<OrderDetail> Create(OrderDetail orderDetail)
+        public async Task<List<OrderDetail>> Create(List<OrderDetail> orderDetails)
         {
-            var newOrderDetail = await _orderDetailsRepository.Create(orderDetail);
+            var newOrderDetail = await _orderDetailsRepository.Create(orderDetails);
             return newOrderDetail;
         }
         public async Task<OrderDetail> Update(int id, OrderDetail orderDetail)

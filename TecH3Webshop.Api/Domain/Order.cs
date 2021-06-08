@@ -9,6 +9,11 @@ namespace TecH3Webshop.Api.Domain
 {
     public class Order : BaseModel
     {
+        public Order()
+        {
+            OrderDetails = new List<OrderDetail>();
+        }
+
         [ForeignKey("Login.Id")]
         public int LoginId { get; set; }
 
@@ -16,5 +21,7 @@ namespace TecH3Webshop.Api.Domain
         public DateTime OrderDate { get; set; } 
 
         public Login Login { get; set; }
+
+        public List<OrderDetail> OrderDetails { get; set; } 
     }
 }

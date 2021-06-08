@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { Image, ListGroup } from 'react-bootstrap';
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom';
 
@@ -7,18 +7,18 @@ const Products = () => {
 
     let location = useLocation();
     const listProducts = location.state.products.map((item) =>
-        <div className="card" key={item.id}>
-            <div className="card_img">
-                {item.images.length === 0 ?
-                    <img></img>
-                    :
-                    <img src={item.images[0].imagePath} />
-                }
+        <div className="card" key={item.id}>               
+         <div className="card_img">
+                    {item.images.length === 0 ?
+                        <Image src="/Image_coming_soon.png"/>
+                        :
+                        <Image src={item.images[0].imagePath} />
+                    }
             </div>
+            <ListGroup.Item action as={Link} to={{ pathname: `/product/${item.id}`, state: item }}>
+            </ListGroup.Item>
             <div className="card_header">
                 <h2>{item.name}</h2>
-                <p className="price">{item.price}<span>$</span></p>
-                <div className="btn">Add to cart</div>
             </div>
         </div>
     );

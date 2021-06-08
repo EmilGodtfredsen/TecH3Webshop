@@ -27,6 +27,6 @@ namespace TecH3Webshop.Api.Domain
         [Required]
         public int Role { get; set; }
 
-        public Address Address { get; set; }
+        public Address? Address { get; set; }
     }
 }

@@ -1,3 +1,16 @@
+# Tirsdag d.8/6-21
+	#TODO
+		- Add description attribute for product entity
+		- Create login functionality on client
+		- Add Authentication on /api/order [POST]
+		- Add Authentication functionality on client
+
+	* Created order controller
+	* Created order details controller 
+	* Updated services and repos handling master/detail for order/order detail
+	* Implemented checkout functionality to client
+
+
 # Mandag d.7/6-21
 	#TODO tirsdag d.8/6-21
 		- create order with orderDetails

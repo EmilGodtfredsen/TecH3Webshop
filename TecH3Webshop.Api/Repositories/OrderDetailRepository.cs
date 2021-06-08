@@ -33,12 +33,15 @@ namespace TecH3Webshop.Api.Repositories
                 .FirstOrDefaultAsync(od => od.Id == id);
         }
 
-        public async Task<OrderDetail> Create(OrderDetail orderDetail)
+        public async Task<List<OrderDetail>> Create(List<OrderDetail> orderDetails)
         {
-            orderDetail.CreatedAt = DateTime.Now;
-            _context.OrderDetails.Add(orderDetail);
+            foreach(OrderDetail orderDetail in orderDetails)
+            {
+                orderDetail.CreatedAt = DateTime.Now;
+                _context.OrderDetails.Add(orderDetail);
+            } 
             await _context.SaveChangesAsync();
-            return orderDetail;
+            return orderDetails;
         }
 
         public async Task<OrderDetail> Update(int id, OrderDetail orderDetail)

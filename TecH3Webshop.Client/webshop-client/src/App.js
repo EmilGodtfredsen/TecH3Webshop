@@ -7,12 +7,14 @@ import { Categories } from './Components/Categories';
 import Products from './Components/Products';
 import Product from './Components/Product';
 import Checkout from './Components/Checkout';
+import CreateUser from './Components/CreateUser';
+
 
 const BASE_URL = 'https://localhost:5001/api/';
 
 function App() {
   const [cart, setCart] = useState([]);
-  
+
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart))
   }, [cart])
@@ -46,7 +48,15 @@ function App() {
               <Product cart={cart} setCart={setCart} />
             </Route>
             <Route path="/checkout">
-              <Checkout getCartTotal={getCartTotal}/>
+              <Checkout
+                getCartTotal={getCartTotal}
+                baseURL={BASE_URL}
+              />
+            </Route>
+            <Route path="/create">
+              <CreateUser
+                baseURL={BASE_URL}
+              />
             </Route>
           </Switch>
         </div>

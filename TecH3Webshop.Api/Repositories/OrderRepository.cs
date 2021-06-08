@@ -20,6 +20,7 @@ namespace TecH3Webshop.Api.Repositories
         {
             return await _context.Orders
                 .Where(o => o.DeletedAt == null)
+                .Include(o => o.OrderDetails.Where(od => od.DeletedAt == null))
                 .Include(o => o.Login)
                 .Where(o => o.Login.DeletedAt == null)
                 .ToListAsync();
@@ -31,11 +32,16 @@ namespace TecH3Webshop.Api.Repositories
                 .Where(o => o.DeletedAt == null)
                 .Include(o => o.Login)
                 .Where(o => o.Login.DeletedAt == null)
+                .Include(o => o.OrderDetails.Where(od => od.DeletedAt == null))
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
         public async Task<Order> Create(Order order)
         {
             order.CreatedAt = DateTime.Now;
+            foreach(OrderDetail orderDetail in order.OrderDetails)
+            {
+                orderDetail.CreatedAt = DateTime.Now;
+            }
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
             return order;
