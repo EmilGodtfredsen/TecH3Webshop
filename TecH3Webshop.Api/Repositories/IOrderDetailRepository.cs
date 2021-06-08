@@ -10,7 +10,7 @@ namespace TecH3Webshop.Api.Repositories
     {
         Task<List<OrderDetail>> GetAll();
         Task<OrderDetail> GetById(int id);
-        Task<OrderDetail> Create(OrderDetail orderDetail);
+        Task<List<OrderDetail>> Create(List<OrderDetail> orderDetails);
         Task<OrderDetail> Update(int id, OrderDetail orderDetail);
         Task<OrderDetail> Delete(int id);
     }

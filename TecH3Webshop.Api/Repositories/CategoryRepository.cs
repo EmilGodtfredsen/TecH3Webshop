@@ -22,6 +22,8 @@ namespace TecH3Webshop.Api.Repositories
                 .Where(c => c.DeletedAt == null)
                 .Include(c => c.Products.Where(p => p.DeletedAt == null))
                 .ThenInclude(p => p.Brand)
+                .Include(c => c.Products.Where(p => p.DeletedAt == null))
+                .ThenInclude(p => p.Images.Where(i => i.DeletedAt == null))
                 .ToListAsync();
         }
 

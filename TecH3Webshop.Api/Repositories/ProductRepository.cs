@@ -23,6 +23,7 @@ namespace TecH3Webshop.Api.Repositories
                 .Where(p => p.Category.DeletedAt == null)
                 .Include(p => p.Brand)
                 .Where(p => p.Brand.DeletedAt == null)
+                .Include(p => p.Images.Where(i => i.DeletedAt == null))
                 .ToListAsync();
         }
 
@@ -34,6 +35,7 @@ namespace TecH3Webshop.Api.Repositories
                 .Where(p => p.Category.DeletedAt == null)
                 .Include(p => p.Brand)
                 .Where(p => p.Brand.DeletedAt == null)
+                .Include(p => p.Images.Where(i => i.DeletedAt == null))
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
         public async Task<Product> Create(Product product)
@@ -52,6 +54,7 @@ namespace TecH3Webshop.Api.Repositories
                 updateProduct.Name = product.Name;
                 updateProduct.Price = product.Price;
                 updateProduct.Quantity = product.Quantity;
+                updateProduct.Images = product.Images;
                 _context.Products.Update(updateProduct);
                 await _context.SaveChangesAsync();
             }

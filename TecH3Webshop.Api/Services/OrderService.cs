@@ -10,9 +10,11 @@ namespace TecH3Webshop.Api.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-        public OrderService(IOrderRepository orderRepository)
+        private readonly IOrderDetailRepository _orderDetailRepository;
+        public OrderService(IOrderRepository orderRepository, IOrderDetailRepository orderDetailRepository)
         {
             _orderRepository = orderRepository;
+            _orderDetailRepository = orderDetailRepository;
         }
         public async Task<List<Order>> GetAll()
         {

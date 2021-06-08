@@ -26,7 +26,7 @@ export default function Navigation() {
                             <span className="d-none d-md-inline"> Check-out</span>
                         </div>
                     </Link>
-                    <Link to="create" style={{ textDecoration: "none" }} >
+                    <Link to="/create" style={{ textDecoration: "none" }} >
                         <div>
                             <FontAwesomeIcon icon="user" fixedWidth />
                             <span className="d-none d-md-inline"> Create user</span>

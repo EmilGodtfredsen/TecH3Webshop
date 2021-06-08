@@ -45,7 +45,8 @@ export default function Product({ setCart, cart }) {
                             :
                             location.state.images.map((image, i) => {
                                 return (
-                                    <Image src={image}></Image>
+                                    <Image key={i} src={image.imagePath} thumbnail={true}></Image>
+                                   
                                 )
                             })
                         }
