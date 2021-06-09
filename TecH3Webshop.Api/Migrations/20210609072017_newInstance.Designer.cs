@@ -10,8 +10,8 @@ using TecH3Webshop.Api.Database;
 namespace TecH3Webshop.Api.Migrations
 {
     [DbContext(typeof(TecH3WebshopDbContext))]
-    [Migration("20210603082900_test-migration")]
-    partial class testmigration
+    [Migration("20210609072017_newInstance")]
+    partial class newInstance
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -123,6 +123,36 @@ namespace TecH3Webshop.Api.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("TecH3Webshop.Api.Domain.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImagePath")
+                        .HasMaxLength(260)
+                        .HasColumnType("nvarchar(260)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Login", b =>
                 {
                     b.Property<int>("Id")
@@ -138,7 +168,7 @@ namespace TecH3Webshop.Api.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -161,6 +191,9 @@ namespace TecH3Webshop.Api.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Email")
+                        .HasName("AlternateKey_Email");
 
                     b.ToTable("Logins");
                 });
@@ -224,6 +257,8 @@ namespace TecH3Webshop.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderId");
+
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderDetails");
@@ -248,6 +283,11 @@ namespace TecH3Webshop.Api.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(32)
@@ -264,8 +304,7 @@ namespace TecH3Webshop.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId")
-                        .IsUnique();
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
 
@@ -277,6 +316,15 @@ namespace TecH3Webshop.Api.Migrations
                     b.HasOne("TecH3Webshop.Api.Domain.Login", null)
                         .WithOne("Address")
                         .HasForeignKey("TecH3Webshop.Api.Domain.Address", "LoginId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TecH3Webshop.Api.Domain.Image", b =>
+                {
+                    b.HasOne("TecH3Webshop.Api.Domain.Product", null)
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -294,6 +342,12 @@ namespace TecH3Webshop.Api.Migrations
 
             modelBuilder.Entity("TecH3Webshop.Api.Domain.OrderDetail", b =>
                 {
+                    b.HasOne("TecH3Webshop.Api.Domain.Order", null)
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TecH3Webshop.Api.Domain.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
@@ -306,13 +360,13 @@ namespace TecH3Webshop.Api.Migrations
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Product", b =>
                 {
                     b.HasOne("TecH3Webshop.Api.Domain.Brand", "Brand")
-                        .WithOne("Product")
-                        .HasForeignKey("TecH3Webshop.Api.Domain.Product", "BrandId")
+                        .WithMany("Products")
+                        .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TecH3Webshop.Api.Domain.Category", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -324,12 +378,27 @@ namespace TecH3Webshop.Api.Migrations
 
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Brand", b =>
                 {
-                    b.Navigation("Product");
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("TecH3Webshop.Api.Domain.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Login", b =>
                 {
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("TecH3Webshop.Api.Domain.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("TecH3Webshop.Api.Domain.Product", b =>
+                {
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

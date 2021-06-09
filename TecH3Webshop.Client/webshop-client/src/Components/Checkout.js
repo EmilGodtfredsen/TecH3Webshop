@@ -4,11 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Col, Row, Image, Button } from 'react-bootstrap'
 import axios from 'axios'
 import date from 'date-and-time';
+import ShowMessage from './Common/ShowMessage';
 
 export default class Checkout extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            messageComment: '',
+            messageVariant: '',
             cart: undefined,
             order: '',
             loginId: 1, //Only for testing purpose
@@ -54,8 +57,19 @@ export default class Checkout extends Component {
             method: 'POST',
             data: this.state.order
         }).then(response => {
-            console.log(response)
-            
+            if (response.status === 200) {
+                let newCart = []
+                this.setState({
+                    messageComment: 'Order created!',
+                    messageVariant: 'success'
+                }, () => this.props.setCart(newCart))
+            }else{
+                this.setState({
+                    messageComment: response.statusText,
+                    messageVariant: 'danger'
+                })
+            }
+
         }).catch((error) => {
             this.handleAlert(Utils.handleAxiosError(error), 'danger')
         })
@@ -90,7 +104,7 @@ export default class Checkout extends Component {
             }
             ))
     }
-    render() {
+    showContent() {
         if (this.state.cart === undefined) {
             return (
                 <p className='text-center'>
@@ -107,6 +121,7 @@ export default class Checkout extends Component {
             return (
                 <div>
                     {this.renderCart()}
+
                     <Button onClick={() => this.generateOrder()} variant="success">
                         <FontAwesomeIcon icon="shopping-cart" fixedWidth /> Checkout
                     </Button>
@@ -114,5 +129,22 @@ export default class Checkout extends Component {
             )
 
         }
+
+    }
+    render() {
+        if (this.state.messageComment) {
+            return (
+                <ShowMessage
+                    comment={this.state.messageComment}
+                    variant={this.state.messageVariant}
+                />
+            )
+        } else {
+            return (
+                this.showContent()
+            )
+        }
+
+
     }
 }
