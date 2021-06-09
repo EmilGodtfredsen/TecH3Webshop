@@ -1,5 +1,17 @@
+# Onsdag d.9/6-21
+	#TODO torsdag d.10/6-21
+		- Finish adminview with full CRUD on prod, cat, login and view of orders
+		- Add Authentication on /api/order [POST]
+		- Add Authentication functionality on client
+
+	* Added description attribute for product entity
+	* Added first 6 products to home page on client
+	* Updated nav with categories instead of seperate component
+	* Implemented simple message for succes checkout
+	* Started on implementing adminview
+
 # Tirsdag d.8/6-21
-	#TODO
+	#TODO onsdag d.9/6-21
 		- Add description attribute for product entity
 		- Create login functionality on client
 		- Add Authentication on /api/order [POST]

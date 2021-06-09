@@ -22,7 +22,7 @@ namespace TecH3Webshop.Api.Repositories
                 .Where(l => l.DeletedAt == null)
                 .OrderBy(l => l.Email)
                 .OrderBy(l => l.FirstName)
-                .Include(l => l.Address).Where(a => a.DeletedAt == null)
+                .Include(l => l.Addresses.Where(a => a.DeletedAt == null))
                 .ToListAsync();
         }
 
@@ -30,7 +30,7 @@ namespace TecH3Webshop.Api.Repositories
         {
             return await _context.Logins
                 .Where(l => l.DeletedAt == null)
-                .Include(l => l.Address).Where(a => a.DeletedAt == null)
+                .Include(l => l.Addresses.Where(a => a.DeletedAt == null))
                 .FirstOrDefaultAsync(l => l.Email == email);
         }
 
@@ -54,7 +54,7 @@ namespace TecH3Webshop.Api.Repositories
                 updateLogin.LastName = login.LastName;
                 updateLogin.Password = login.Password;
                 updateLogin.Role = login.Role;
-                updateLogin.Address = login.Address;
+                updateLogin.Addresses = login.Addresses;
             }
             return updateLogin;
         }

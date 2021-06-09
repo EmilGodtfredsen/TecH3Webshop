@@ -10,7 +10,7 @@ namespace TecH3Webshop.Api.Domain
     {
         public Login()
         {
-            Address = new Address();
+            Addresses = new List<Address>();
         }
         [Required(ErrorMessage ="Field cannot be empty!")]
         [EmailAddress(ErrorMessage = "Email is not valid!")]
@@ -27,6 +27,6 @@ namespace TecH3Webshop.Api.Domain
         [Required]
         public int Role { get; set; }
 
-        public Address? Address { get; set; }
+        public List<Address> Addresses { get; set; }
     }
 }

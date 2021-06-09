@@ -255,6 +255,8 @@ namespace TecH3Webshop.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderId");
+
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderDetails");
@@ -278,6 +280,11 @@ namespace TecH3Webshop.Api.Migrations
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -333,6 +340,12 @@ namespace TecH3Webshop.Api.Migrations
 
             modelBuilder.Entity("TecH3Webshop.Api.Domain.OrderDetail", b =>
                 {
+                    b.HasOne("TecH3Webshop.Api.Domain.Order", null)
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TecH3Webshop.Api.Domain.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
@@ -374,6 +387,11 @@ namespace TecH3Webshop.Api.Migrations
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Login", b =>
                 {
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("TecH3Webshop.Api.Domain.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("TecH3Webshop.Api.Domain.Product", b =>

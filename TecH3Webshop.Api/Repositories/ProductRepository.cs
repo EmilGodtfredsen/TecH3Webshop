@@ -52,6 +52,7 @@ namespace TecH3Webshop.Api.Repositories
             {
                 updateProduct.UpdatedAt = DateTime.Now;
                 updateProduct.Name = product.Name;
+                updateProduct.Description = product.Description;
                 updateProduct.Price = product.Price;
                 updateProduct.Quantity = product.Quantity;
                 updateProduct.Images = product.Images;

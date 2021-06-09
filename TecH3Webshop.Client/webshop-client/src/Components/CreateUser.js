@@ -9,6 +9,7 @@ export default class CreateUser extends Component {
             email: '',
             password: '',
             confirmPassword: '',
+            newLogin: '',
         }
 
     }
@@ -16,13 +17,13 @@ export default class CreateUser extends Component {
     handleChange = e => {
         this.setState({
             [e.target.name]: e.target.value,
-          }, () => this.validateInput())
+          })
     }
 
     handleClick(){
-        console.log(this.state.email)
-        console.log(this.state.password)
-        console.log(this.state.confirmPassword)
+        if(!this.state.password.length < 6){
+            console.log('Password must be atleast 6 chars long!')
+        }
     }
 
 

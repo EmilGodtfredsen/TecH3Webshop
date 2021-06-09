@@ -17,6 +17,10 @@ namespace TecH3Webshop.Api.Domain
         [StringLength(32, ErrorMessage = "Product name cannot be longet than 32 chars!")]
         public string Name { get; set; }
 
+        [Required]
+        [StringLength(512, ErrorMessage = "Product description cannot be longet than 512 chars!")]
+        public string Description { get; set; }
+
         [ForeignKey("Brand.Id")]
         public int BrandId { get; set; }
 
