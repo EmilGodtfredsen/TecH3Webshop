@@ -55,7 +55,8 @@ namespace TecH3Webshop.Api.Repositories
                 updateProduct.Description = product.Description;
                 updateProduct.Price = product.Price;
                 updateProduct.Quantity = product.Quantity;
-                updateProduct.Images = product.Images;
+                updateProduct.BrandId = product.BrandId;
+                updateProduct.CategoryId = product.CategoryId;
                 _context.Products.Update(updateProduct);
                 await _context.SaveChangesAsync();
             }

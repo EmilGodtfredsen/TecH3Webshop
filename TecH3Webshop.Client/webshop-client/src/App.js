@@ -31,7 +31,6 @@ function App() {
   };
 
   useEffect(() => {
-
     // ++++ GET ALL CATEGORIES ++++
     axios.defaults.baseURL = BASE_URL;
     axios({
@@ -53,7 +52,7 @@ function App() {
       console.log(error)
     })
 
-  }, []);
+  }, [products]);
 
   return (
     <div id="wrapper">
@@ -91,6 +90,8 @@ function App() {
             <Route path="/admin">
               <Admin 
                 baseURL={BASE_URL}
+                setCategories={setCategories}
+                setProducts={setProducts}
               />
             </Route>
           </Switch>

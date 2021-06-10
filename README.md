@@ -1,3 +1,16 @@
+# Torsdag d.10/6-21
+	#TODO fredag d.11/6-21
+		- Add product
+		- Image admin on product
+		- Login admin
+		- Orders admin
+
+	* Installed react-bootstraptable on client: npm install react-bootstrap-table-next --save
+	* Implemented editing on product: name, brand, category, description, price and stock. (admin view)
+	* Implemented delete product funct. (admin view)
+	* Finished CRUD on Categories. (admin view)
+
+
 # Onsdag d.9/6-21
 	#TODO torsdag d.10/6-21
 		- Finish adminview with full CRUD on prod, cat, login and view of orders
