@@ -323,7 +323,10 @@ nav .search .fa + .fa {
 .main_content .card .card_img img {
   width: 200px;
 }
-
+#image_container{
+  height: 100px;
+  width: 200px;
+}
 .main_content .card .card_header {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;

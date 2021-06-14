@@ -17,7 +17,10 @@ export class Admin extends Component {
             logins: undefined,
             orders: undefined,
             brands: undefined,
+            productImagesId: '',
+            product: '',
         }
+        
     }
     componentDidMount() {
         this.getAllProducts()
@@ -64,7 +67,20 @@ export class Admin extends Component {
             this.handleAlert(Utils.handleAxiosError(error, 'danger'))
         })
     }
-
+    getProductImages(id) {
+        axios.defaults.baseURL = this.props.baseURL;
+        axios({
+            url: '/product/' + id,
+            method: 'GET',
+        }).then(response => {
+            console.log(response.data)
+            this.setState({
+                product: response.data
+            })
+        }).catch((error) => {
+            this.handleAlert(Utils.handleAxiosError(error, 'danger'))
+        })
+    }
     render() {
         return (
             <div>
@@ -99,8 +115,11 @@ export class Admin extends Component {
                                 baseURL={this.props.baseURL}
                                 products={this.state.products}
                                 getProducts={this.getAllProducts.bind(this)}
+                                getCategories={this.getAllCategories.bind(this)}
+                                getProductImages={this.getProductImages.bind(this)}
                                 brands={this.state.brands}
                                 categories={this.state.categories}
+                                product={this.state.product}
                                 />
                             </Card.Body>
                         </Card>

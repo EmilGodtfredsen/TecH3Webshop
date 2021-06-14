@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Dropdown } from 'react-bootstrap';
+import { Button, Dropdown, Form } from 'react-bootstrap';
 import BootstrapTable from "react-bootstrap-table-next";
 import cellEditFactory from "react-bootstrap-table2-editor";
 import _ from 'lodash';
 import axios from 'axios';
 import Utils from '../Common/Utils';
-
+import ProductImagesAdmin from './ProductImagesAdmin';
+import ShowMessage from '../Common/ShowMessage';
 
 export class ProductsAdmin extends Component {
     constructor(props) {
@@ -21,6 +22,14 @@ export class ProductsAdmin extends Component {
             images: '',
             categories: '',
             tempObj: '',
+            newProductName: '',
+            newBrand: '',
+            newBrandId: '',
+            newCategory: '',
+            newCategoryId: '',
+            newProductDescription: '',
+            getImagesFromProductId: '',
+            showImagesAdmin: false,
         }
     }
 
@@ -69,9 +78,13 @@ export class ProductsAdmin extends Component {
     }
 
     handleChange = e => {
-        console.log(e.target.value)
         this.setState({
-            [e.target.name]: e.target.value,
+            newProductName: e.target.value,
+        })
+    }
+    handleDescriptionChange = e => {
+        this.setState({
+            newProductDescription: e.target.value,
         })
     }
     createNewProduct() {
@@ -81,54 +94,58 @@ export class ProductsAdmin extends Component {
             method: 'POST',
             data: {
                 "name": this.state.newProductName,
-                "description": this.state.ProductDescription,
-                "price": this.state.newProductPrice,
-                "images": this.state.newProductImages,
+                "description": this.state.newProductDescription,
+                "brandId": this.state.newBrandId,
+                "categoryId": this.state.newCategoryId,
+                "price": 0,
+                "quantity": 0
             }
         }).then(response => {
-            console.log(response.data)
+            this.props.getProducts()
         }).catch((error) => {
             this.handleAlert(Utils.handleAxiosError(error), 'danger')
         })
     }
     deleteClicked(id) {
-        axios.defaults.baseURL = this.props.baseURL;
-        axios({
-            url: '/category/' + id,
-            method: 'DELETE',
-        }).then(response => {
-            this.props.getCategories()
-        }).catch((error) => {
-            this.handleAlert(Utils.handleAxiosError(error), 'danger')
-        })
-
+        if (window.confirm('Delete product ?')) {
+            axios.defaults.baseURL = this.props.baseURL;
+            axios({
+                url: '/product/' + id,
+                method: 'DELETE',
+            }).then(response => {
+                console.log(response.data)
+                this.props.getProducts()
+            }).catch((error) => {
+                this.handleAlert(Utils.handleAxiosError(error), 'danger')
+            })
+        }
     }
     handleUpdate = (obj, id) => {
         this.setState({
             newobj: obj
-        }, () => 
-        axios({
-            url: '/product/' + id,
-            method: 'PUT',
-            data: this.state.newobj
-        }).then(response => {
-            if (response.status >= 200 && response.status <= 404) {
-                this.handleAlert(response.statusText, 'danger')
-                this.getAllBrands()
-                this.getAllCategories()
-                this.props.getProducts()
-            }
-        }).catch(error => {
-            this.handleAlert(error, 'danger')
-        }))
+        }, () =>
+            axios({
+                url: '/product/' + id,
+                method: 'PUT',
+                data: this.state.newobj
+            }).then(response => {
+                if (response.status >= 200 && response.status <= 404) {
+                    this.handleAlert(response.statusText, 'danger')
+                    this.getAllBrands()
+                    this.getAllCategories()
+                    this.props.getProducts()
+                }
+            }).catch(error => {
+                this.handleAlert(error, 'danger')
+            }))
     }
     changeBrand(obj, id, prod) {
         prod.brandId = obj.id;
         prod.brand = obj;
         this.setState({
             tempObj: prod,
-        }, () =>  this.handleUpdate(this.state.tempObj, id))
-         
+        }, () => this.handleUpdate(this.state.tempObj, id))
+
     }
     changeCategory(obj, id, prod) {
         prod.categoryId = obj.id;
@@ -137,12 +154,31 @@ export class ProductsAdmin extends Component {
             tempObj: prod,
         }, () => this.handleUpdate(this.state.tempObj, id))
     }
-
     showImages(id) {
-        console.log('Show images with productID: ' + id)
+        this.props.getProductImages(id)
+        this.setState({
+            showImagesAdmin: true,
+        })
     }
-
+    handleSelectionOfBrand(brandName, id) {
+        this.setState({
+            newBrand: brandName,
+            newBrandId: id
+        })
+    }
+    handleSelectionOfCategory(categoryName, id) {
+        this.setState({
+            newCategory: categoryName,
+            newCategoryId: id,
+        })
+    }
+    closeModal() {
+        this.setState({
+            showImagesAdmin: false,
+        })
+    }
     render() {
+
         const data = _.sortBy(this.props.products, ['name'])
         const cellEdit = cellEditFactory({
             mode: 'click',
@@ -290,33 +326,118 @@ export class ProductsAdmin extends Component {
             }
         }]
 
-
-
-        return (
-
-            <div>
-                <BootstrapTable
-                    keyField="id"
-                    data={data}
-                    columns={columns}
-                    cellEdit={cellEdit}
-                    classes="table table-striped table-hover table-borderless"
-                    headerWrapperClasses="title"
-                    condensed
-                    noDataIndication={() => <div className="text-muted"><FontAwesomeIcon icon="box-open" /> No data yet</div>}
+        if (this.state.messageComment) {
+            return (
+                <ShowMessage
+                    comment={this.state.messageComment}
+                    variant={this.state.messageVariant}
                 />
+            )
+        } else {
+            return (
+                <>
+                    {this.state.showImagesAdmin === true ?
+                        <ProductImagesAdmin
+                            show={this.state.showImagesAdmin}
+                            product={this.props.product}
+                            closeModal={this.closeModal.bind(this)}
+                            baseURL={this.props.baseURL}
+                        />
+                        :
+                        <div>
+                            <BootstrapTable
+                                keyField="id"
+                                data={data}
+                                columns={columns}
+                                cellEdit={cellEdit}
+                                classes="table table-striped table-hover table-borderless"
+                                headerWrapperClasses="title"
+                                condensed
+                                noDataIndication={() => <div className="text-muted"><FontAwesomeIcon icon="box-open" /> No data yet</div>}
+                            />
 
-                <Button
-                    id="addPrefix"
-                    variant="success"
-                    type="submit"
-                >
-                    Add <FontAwesomeIcon icon="plus" fixedWidth />
-                </Button>
-            </div>
+                            <Form>
+                                <Form.Row>
+                                    <Form.Group className="mr-2">
+                                        <Form.Control
+                                            value={this.state.newProductName}
+                                            type="text"
+                                            onChange={this.handleChange.bind(this)}
+                                            placeholder="Enter New Product">
+                                        </Form.Control>
+                                    </Form.Group>
+                                    <Form.Group className="mr-2">
+                                        {this.state.brands === undefined || this.state.brands === '' ?
 
-        )
+                                            <div className="text-muted"><FontAwesomeIcon icon="box-open" /> No data yet</div>
 
+                                            :
+                                            <>
+                                                <Dropdown>
+                                                    <Dropdown.Toggle
+                                                        size="sm"
+                                                        variant="dark"
+
+                                                    >
+                                                        {this.state.newBrand}
+                                                    </Dropdown.Toggle>
+                                                    <Dropdown.Menu>
+                                                        {this.state.brands.map((b, i) =>
+                                                            <Dropdown.Item key={i} onSelect={() => this.handleSelectionOfBrand(b.name, b.id)}>
+                                                                {b.name}
+                                                            </Dropdown.Item>
+                                                        )}
+                                                    </Dropdown.Menu>
+                                                </Dropdown>
+                                            </>
+                                        }
+                                    </Form.Group>
+                                    <Form.Group className="mr-2">
+                                        {this.state.categories === undefined || this.state.categories === '' ?
+                                            <div className="text-muted"><FontAwesomeIcon icon="box-open" /> No data yet</div>
+
+                                            :
+                                            <>
+                                                <Dropdown>
+                                                    <Dropdown.Toggle
+                                                        size="sm"
+                                                        variant="dark"
+
+                                                    >
+                                                        {this.state.newCategory}
+                                                    </Dropdown.Toggle>
+                                                    <Dropdown.Menu>
+                                                        {this.state.categories.map((c, i) =>
+                                                            <Dropdown.Item key={i} onSelect={() => this.handleSelectionOfCategory(c.name, c.id)}>
+                                                                {c.name}
+                                                            </Dropdown.Item>
+                                                        )}
+                                                    </Dropdown.Menu>
+                                                </Dropdown>
+                                            </>
+                                        }
+                                    </Form.Group>
+                                    <Form.Group className="mr-2">
+                                        <Form.Control
+                                            value={this.state.newProductDescription}
+                                            type="text"
+                                            onChange={this.handleDescriptionChange.bind(this)}
+                                            placeholder="Enter Product Description">
+                                        </Form.Control>
+                                    </Form.Group>
+                                    <Button
+                                        variant="success"
+                                        onClick={() => this.createNewProduct()}
+                                    >
+                                        Add <FontAwesomeIcon icon="plus" fixedWidth />
+                                    </Button>
+                                </Form.Row>
+                            </Form>
+                        </div>
+                    }
+                </>
+            )
+        }
     }
 }
 

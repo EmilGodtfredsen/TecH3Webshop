@@ -32,8 +32,6 @@ export class CategoriesAdmin extends Component {
     }
 
     handleChange = e => {
-        console.log(e.target.value)
-
         this.setState({
             newCategory: e.target.value,
         })
@@ -68,6 +66,7 @@ export class CategoriesAdmin extends Component {
         this.setState({
             newCategory: ''
         })
+        axios.defaults.baseURL = this.props.baseURL;
         axios({
             url: '/category/' + id,
             method: 'PUT',
@@ -86,7 +85,6 @@ export class CategoriesAdmin extends Component {
 
 
     render() {
-
         const data = _.sortBy(this.props.categories, ['name'])
         const cellEdit = cellEditFactory({
             mode: 'click',

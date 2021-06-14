@@ -1,3 +1,11 @@
+# Mandag d.14/6-21
+	#TODO
+		- 
+
+	* Implemented add product to product admin view
+	* Implemented delete of product -||-
+	* 
+
 # Torsdag d.10/6-21
 	#TODO fredag d.11/6-21
 		- Add product
