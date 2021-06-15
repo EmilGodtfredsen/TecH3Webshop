@@ -21,6 +21,7 @@ namespace TecH3Webshop.Api.Repositories
             return await _context.Orders
                 .Where(o => o.DeletedAt == null)
                 .Include(o => o.OrderDetails.Where(od => od.DeletedAt == null))
+                .ThenInclude(od => od.Product).ThenInclude(p => p.Images)
                 .Include(o => o.Login)
                 .Where(o => o.Login.DeletedAt == null)
                 .ToListAsync();
@@ -33,6 +34,11 @@ namespace TecH3Webshop.Api.Repositories
                 .Include(o => o.Login)
                 .Where(o => o.Login.DeletedAt == null)
                 .Include(o => o.OrderDetails.Where(od => od.DeletedAt == null))
+                .ThenInclude(od => od.Product).ThenInclude(p => p.Images)
+                .Include(o => o.OrderDetails.Where(od => od.DeletedAt == null))
+                .ThenInclude(od => od.Product).ThenInclude(p => p.Brand)
+                .Include(o => o.OrderDetails.Where(od => od.DeletedAt == null))
+                .ThenInclude(od => od.Product).ThenInclude(p => p.Category)
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
         public async Task<Order> Create(Order order)

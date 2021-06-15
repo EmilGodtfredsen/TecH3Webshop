@@ -1,32 +1,170 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Form, Button, Col } from 'react-bootstrap';
+import BootstrapTable from "react-bootstrap-table-next";
+import cellEditFactory from "react-bootstrap-table2-editor";
+import _ from 'lodash';
+import axios from 'axios';
+import Utils from '../Common/Utils';
+
 
 
 export class CategoriesAdmin extends Component {
-    render() {
-        if (this.props.categories === undefined) {
-            return (
-                <p className='text-center'>
-                    <FontAwesomeIcon icon='sync-alt' size="lg" spin={true} />
-                </p>
-            )
-        } else if (this.props.categories.length === 0) {
-            return (
-                <div>
-                    <h5 className="title"><p className="badge badge-dark bg-secondary">No Product</p></h5>
-                </div>
-            )
+    constructor(props) {
+        super(props)
+        this.state = {
+            messageComment: '',
+            messageVariant: '',
+            newCategory: '',
         }
-        else {
-            return (
-                this.props.categories.map((cat, i) => {
-                    return (
-                        <p key={i}>{cat.name}</p>
-                    )
+    }
+    handleAlert = (comment, variant) => {
+        this.setState({
+            messageComment: comment,
+            messageVariant: variant,
+        })
+        this.timer = setTimeout(() => {
+            this.setState({
+                comment: '',
+                variant: '',
+            })
+        }, 3000)
+    }
 
-                })
-            )
-        }
+    handleChange = e => {
+        this.setState({
+            newCategory: e.target.value,
+        })
+    }
+    createNewCategory() {
+        axios.defaults.baseURL = this.props.baseURL;
+        axios({
+            url: '/category',
+            method: 'POST',
+            data: {
+                "name": this.state.newCategory,
+            }
+        }).then(response => {
+            console.log(response.data)
+        }).catch((error) => {
+            this.handleAlert(Utils.handleAxiosError(error), 'danger')
+        })
+    }
+    deleteClicked(id) {
+        axios.defaults.baseURL = this.props.baseURL;
+        if(window.confirm('Delete category?'))
+        axios({
+            url: '/category/' + id,
+            method: 'DELETE',
+        }).then(response => {
+            this.props.getCategories()
+        }).catch((error) => {
+            this.handleAlert(Utils.handleAxiosError(error), 'danger')
+        })
+
+    }
+    handleUpdate = (newValue, id) => {
+        this.setState({
+            newCategory: ''
+        })
+        axios.defaults.baseURL = this.props.baseURL;
+        axios({
+            url: '/category/' + id,
+            method: 'PUT',
+            data: {
+                'name': newValue
+            }
+        }).then(response => {
+            if (response.status >= 200 && response.status <= 404) {
+                this.handleAlert(response.statusText, 'danger')
+                this.props.getCategories()
+            }
+        }).catch(error => {
+            this.handleAlert(error, 'danger')
+        })
+    }
+
+
+    render() {
+        const data = _.sortBy(this.props.categories, ['name'])
+        const cellEdit = cellEditFactory({
+            mode: 'click',
+            blurToSave: true,
+            beforeSaveCell: (oldValue, newValue, row, column) => {
+                if (oldValue !== newValue) {
+                    this.handleUpdate(newValue, row.id)
+                }
+            }
+        })
+
+        const columns = [{
+            dataField: 'id',
+            text: 'ID',
+            hidden: true
+        },
+        {
+            dataField: 'name',
+            text: 'Category'
+        },
+        {
+            dataField: "action",
+            text: "",
+            isDummyField: true,
+            editable: false,
+            align: 'right',
+            formatter: (cellContent, row) => {
+                return (
+                    <Button
+                        size="sm"
+                        variant="danger"
+                        onClick={() => this.deleteClicked(row.id)
+                        }
+                    >
+                        <FontAwesomeIcon icon="trash-alt" fixedWidth />
+                    </Button>
+                )
+            }
+        }]
+
+        return (
+
+            <div>
+                <BootstrapTable
+                    keyField="id"
+                    data={data}
+                    columns={columns}
+                    cellEdit={cellEdit}
+                    classes="table table-striped table-hover table-borderless"
+                    headerWrapperClasses="title"
+                    condensed
+                    noDataIndication={() => <div className="text-muted"><FontAwesomeIcon icon="box-open" /> No data yet</div>}
+                />
+                <Form>
+                    <Form.Row>
+                        <Form.Group as={Col}>
+                            <Form.Control
+                                value={this.state.newCategory}
+                                type="text"
+                                onChange={this.handleChange.bind(this)}
+                                placeholder="Enter New Category">
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                            <Button
+                                id="addPrefix"
+                                variant="success"
+                                type="submit"
+                                onClick={() => this.createNewCategory()}
+                            >
+                                Add <FontAwesomeIcon icon="plus" fixedWidth />
+                            </Button>
+                        </Form.Group>
+                    </Form.Row>
+                </Form>
+            </div>
+
+        )
+
     }
 }
 

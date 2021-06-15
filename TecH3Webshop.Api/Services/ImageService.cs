@@ -30,11 +30,6 @@ namespace TecH3Webshop.Api.Services
             var newImage = await _imageRepository.Create(image);
             return newImage;
         }
-        public async Task<Image> Update(int id, Image image)
-        {
-            var updateImage = await _imageRepository.Update(id, image);
-            return updateImage;
-        }
         public async Task<Image> Delete(int id)
         {
             var image = await _imageRepository.Delete(id);

@@ -34,17 +34,6 @@ namespace TecH3Webshop.Api.Repositories
             await _context.SaveChangesAsync();
             return image;
         }
-        public async Task<Image> Update(int id, Image image)
-        {
-            var updateImage = await _context.Images.FirstOrDefaultAsync(i => i.Id == id);
-            if(updateImage != null)
-            {
-                updateImage.UpdatedAt = DateTime.Now;
-                _context.Images.Update(updateImage);
-                await _context.SaveChangesAsync();
-            }
-            return updateImage;
-        }
         public async Task<Image> Delete(int id)
         {
             var image = await _context.Images.FirstOrDefaultAsync(i => i.Id == id);

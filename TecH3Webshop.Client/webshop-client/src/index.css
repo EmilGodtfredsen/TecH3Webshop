@@ -323,7 +323,10 @@ nav .search .fa + .fa {
 .main_content .card .card_img img {
   width: 200px;
 }
-
+#image_container{
+  height: 100px;
+  width: 200px;
+}
 .main_content .card .card_header {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -368,9 +371,9 @@ nav .search .fa + .fa {
 }
 
 .btn {
-  width: 130px;
-  height: 35px;
-  font-size: 14px;
+  justify-content: center;
+  height: 40px;
+  font-size: 20px;
   border-radius: 35px;
   background-color: #2d343e;
   color: rgba(255, 255, 255, 0.5);

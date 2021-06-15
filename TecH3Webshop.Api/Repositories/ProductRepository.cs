@@ -47,7 +47,9 @@ namespace TecH3Webshop.Api.Repositories
         }
         public async Task<Product> Update(int id, Product product)
         {
-            var updateProduct = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            var updateProduct = await _context.Products
+                .Include(p => p.Images.Where(i => i.DeletedAt == null))
+                .FirstOrDefaultAsync(p => p.Id == id);
             if(updateProduct != null)
             {
                 updateProduct.UpdatedAt = DateTime.Now;
@@ -55,6 +57,8 @@ namespace TecH3Webshop.Api.Repositories
                 updateProduct.Description = product.Description;
                 updateProduct.Price = product.Price;
                 updateProduct.Quantity = product.Quantity;
+                updateProduct.BrandId = product.BrandId;
+                updateProduct.CategoryId = product.CategoryId;
                 updateProduct.Images = product.Images;
                 _context.Products.Update(updateProduct);
                 await _context.SaveChangesAsync();
