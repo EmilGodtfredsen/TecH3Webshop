@@ -23,7 +23,6 @@ export class ProductImagesAdmin extends Component {
             })
         }, 3000)
     }
-
     handleChange = e => {
         this.setState({
             imagePath: e.target.value,
@@ -31,12 +30,12 @@ export class ProductImagesAdmin extends Component {
     }
     addImageToProduct() {
         this.props.product.images.push({ 'imagePath': this.state.imagePath, 'productId': this.props.product.id })
-        axios.defaults.baseURL = this.props.baseURL;
         this.setState({
             tempObj: this.props.product,
         }, () => this.handleUpdate(this.state.tempObj, this.props.product.id))
     }
     handleUpdate(obj, id) {
+        axios.defaults.baseURL = this.props.baseURL;
         this.setState({
             newObj: obj
         }, () => axios({
@@ -44,12 +43,10 @@ export class ProductImagesAdmin extends Component {
             method: 'PUT',
             data: obj
         }).then(response => {
-            console.log(response)
-
-            // if (response.status >= 200 && response.status <= 404) {
-            //     this.handleAlert(response.statusText, 'danger')
-            //     this.props.getCategories()
-            // }
+            if (response.status >= 200 && response.status <= 404) {
+                this.handleAlert(response.statusText, 'success')
+                this.props.getProducts()
+            }
         }).catch(error => {
             this.handleAlert(error, 'danger')
         }))
@@ -60,6 +57,15 @@ export class ProductImagesAdmin extends Component {
             images: undefined,
         })
         this.props.closeModal()
+    }
+    deleteImage(index){
+        this.props.product.images.splice(index, 1)
+        console.log(this.props.product)
+        this.setState({
+            tempObj: this.props.product
+        }, () => this.handleUpdate(this.state.tempObj, this.props.product.id))
+        console.log(this.props.product.images)
+        
     }
     render() {
         return (
@@ -78,15 +84,13 @@ export class ProductImagesAdmin extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         {this.props.product.images === undefined || this.props.product.images.length === 0 ?
-
                             <div className="text-muted"><FontAwesomeIcon icon="box-open" /> No images</div>
-
                             :
                             <div>
                                 {this.props.product.images.map((img, i) => {
                                     return (
                                         <Row key={i}>
-                                            <div id='img_container' >
+                                            <div style={{ width: "171px", height: "180px"}}>
                                                 <Image
                                                     src={img.imagePath}
                                                     thumbnail={true}
@@ -95,6 +99,8 @@ export class ProductImagesAdmin extends Component {
                                             </div>
                                             <Button
                                                 variant="danger"
+                                                type="submit"
+                                                onClick={() => this.deleteImage(i)}
                                             >
                                                 Delete <FontAwesomeIcon icon="trash-alt" fixedWidth />
                                             </Button>

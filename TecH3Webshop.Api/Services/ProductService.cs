@@ -10,9 +10,11 @@ namespace TecH3Webshop.Api.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        public ProductService(IProductRepository productRepository)
+        private readonly IImageRepository _imageRepository;
+        public ProductService(IProductRepository productRepository, IImageRepository imageRepository)
         {
             _productRepository = productRepository;
+            _imageRepository = imageRepository;
         }
 
         public async Task<List<Product>> GetAll()

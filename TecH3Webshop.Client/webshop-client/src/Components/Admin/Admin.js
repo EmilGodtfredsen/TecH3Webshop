@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Utils from '../Common/Utils';
 import CategoriesAdmin from './CategoriesAdmin';
 import { ProductsAdmin } from './ProductsAdmin';
+import OrdersAdmin from './OrdersAdmin';
+import LoginsAdmin from './LoginsAdmin';
 
 export class Admin extends Component {
     constructor(props) {
@@ -20,13 +22,13 @@ export class Admin extends Component {
             productImagesId: '',
             product: '',
         }
-        
+
     }
     componentDidMount() {
         this.getAllProducts()
         this.getAllCategories()
-        // this.getAllLogins()
-        // this.getAllOrders()
+        this.getAllLogins()
+        this.getAllOrders()
     }
 
     handleAlert = (comment, variant) => {
@@ -67,13 +69,39 @@ export class Admin extends Component {
             this.handleAlert(Utils.handleAxiosError(error, 'danger'))
         })
     }
+    getAllOrders() {
+        axios.defaults.baseURL = this.props.baseURL;
+        axios({
+            url: '/order',
+            method: 'GET',
+        }).then(response => {
+            this.setState({
+                orders: response.data
+            })
+        }).catch((error) => {
+            this.handleAlert(Utils.handleAxiosError(error, 'danger'))
+        })
+    }
+    getAllLogins(){
+        axios.defaults.baseURL = this.props.baseURL;
+        axios({
+            url: '/login',
+            method: 'GET',
+        }).then(response => {
+            console.log(response)
+            this.setState({
+                logins: response.data
+            })
+        }).catch((error) => {
+            this.handleAlert(Utils.handleAxiosError(error, 'danger'))
+        })
+    }
     getProductImages(id) {
         axios.defaults.baseURL = this.props.baseURL;
         axios({
             url: '/product/' + id,
             method: 'GET',
         }).then(response => {
-            console.log(response.data)
             this.setState({
                 product: response.data
             })
@@ -89,7 +117,7 @@ export class Admin extends Component {
                         <Card>
                             <Card.Header className="text-uppercase title">
                                 <div className="p-2 font-weight-bold d-flex"> Categories
-                                          <FontAwesomeIcon icon='cog' size='lg' className='ml-auto' fixedWidth />
+                                    <FontAwesomeIcon icon='cog' size='lg' className='ml-auto' fixedWidth />
                                 </div>
                             </Card.Header>
                             <Card.Body>
@@ -107,19 +135,19 @@ export class Admin extends Component {
                         <Card>
                             <Card.Header className="text-uppercase title">
                                 <div className="p-2 font-weight-bold d-flex"> Products
-                                          <FontAwesomeIcon icon='cog' size='lg' className='ml-auto' fixedWidth />
+                                    <FontAwesomeIcon icon='cog' size='lg' className='ml-auto' fixedWidth />
                                 </div>
                             </Card.Header>
                             <Card.Body>
                                 <ProductsAdmin
-                                baseURL={this.props.baseURL}
-                                products={this.state.products}
-                                getProducts={this.getAllProducts.bind(this)}
-                                getCategories={this.getAllCategories.bind(this)}
-                                getProductImages={this.getProductImages.bind(this)}
-                                brands={this.state.brands}
-                                categories={this.state.categories}
-                                product={this.state.product}
+                                    baseURL={this.props.baseURL}
+                                    products={this.state.products}
+                                    getProducts={this.getAllProducts.bind(this)}
+                                    getCategories={this.getAllCategories.bind(this)}
+                                    getProductImages={this.getProductImages.bind(this)}
+                                    brands={this.state.brands}
+                                    categories={this.state.categories}
+                                    product={this.state.product}
                                 />
                             </Card.Body>
                         </Card>
@@ -130,11 +158,14 @@ export class Admin extends Component {
                         <Card>
                             <Card.Header className="text-uppercase title">
                                 <div className="p-2 font-weight-bold d-flex"> Logins
-                                          <FontAwesomeIcon icon='cog' size='lg' className='ml-auto' fixedWidth />
+                                    <FontAwesomeIcon icon='cog' size='lg' className='ml-auto' fixedWidth />
                                 </div>
                             </Card.Header>
                             <Card.Body>
-
+                                <LoginsAdmin
+                                    baseURL={this.props.baseURL}
+                                    logins={this.state.logins}
+                                />
                             </Card.Body>
                         </Card>
                     </Col>
@@ -144,11 +175,15 @@ export class Admin extends Component {
                         <Card>
                             <Card.Header className="text-uppercase title">
                                 <div className="p-2 font-weight-bold d-flex"> Orders
-                                          <FontAwesomeIcon icon='cog' size='lg' className='ml-auto' fixedWidth />
+                                    <FontAwesomeIcon icon='cog' size='lg' className='ml-auto' fixedWidth />
                                 </div>
                             </Card.Header>
                             <Card.Body>
-
+                                <OrdersAdmin
+                                    baseURL={this.props.baseURL}
+                                    orders={this.state.orders}
+                                    getOrders={this.getAllOrders.bind(this)}
+                                />
                             </Card.Body>
                         </Card>
                     </Col>

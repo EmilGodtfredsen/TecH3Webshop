@@ -58,6 +58,8 @@ namespace TecH3Webshop.Api
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
             services.AddScoped<IOrderDetailService, OrderDetailService>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IImageService, ImageService>();
 
             services.AddControllers()
                .AddNewtonsoftJson(o =>

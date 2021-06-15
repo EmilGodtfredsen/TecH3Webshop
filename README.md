@@ -1,10 +1,22 @@
-# Mandag d.14/6-21
-	#TODO
+# Tirsdag d.15/6-21
+	#TODO onsdag d.16/6-21
 		- 
+
+	* Implemented delete of image of product
+	* Created orderdetails modal view for each order
+	* Started on displaying logins for CRUD
+
+# Mandag d.14/6-21
+	#TODO tirsdag d.15/6-21
+		- Delete image
+		- start on orders admin view
+		- start on logins admin view
 
 	* Implemented add product to product admin view
 	* Implemented delete of product -||-
-	* 
+
+# Fredag d.11/6-21
+	++++ SYGEDAG ++++
 
 # Torsdag d.10/6-21
 	#TODO fredag d.11/6-21

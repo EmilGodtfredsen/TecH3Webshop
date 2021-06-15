@@ -76,7 +76,6 @@ export class ProductsAdmin extends Component {
             this.handleAlert(Utils.handleAxiosError(error, 'danger'))
         })
     }
-
     handleChange = e => {
         this.setState({
             newProductName: e.target.value,
@@ -341,6 +340,7 @@ export class ProductsAdmin extends Component {
                             show={this.state.showImagesAdmin}
                             product={this.props.product}
                             closeModal={this.closeModal.bind(this)}
+                            getProducts={this.props.getProducts()}
                             baseURL={this.props.baseURL}
                         />
                         :

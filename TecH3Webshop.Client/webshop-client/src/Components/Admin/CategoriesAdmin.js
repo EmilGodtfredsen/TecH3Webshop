@@ -52,6 +52,7 @@ export class CategoriesAdmin extends Component {
     }
     deleteClicked(id) {
         axios.defaults.baseURL = this.props.baseURL;
+        if(window.confirm('Delete category?'))
         axios({
             url: '/category/' + id,
             method: 'DELETE',
