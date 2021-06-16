@@ -88,7 +88,6 @@ export class Admin extends Component {
             url: '/login',
             method: 'GET',
         }).then(response => {
-            console.log(response)
             this.setState({
                 logins: response.data
             })
@@ -165,6 +164,7 @@ export class Admin extends Component {
                                 <LoginsAdmin
                                     baseURL={this.props.baseURL}
                                     logins={this.state.logins}
+                                    getLogins={this.getAllLogins.bind(this)}
                                 />
                             </Card.Body>
                         </Card>

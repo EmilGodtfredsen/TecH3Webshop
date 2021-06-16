@@ -9,15 +9,17 @@ import Product from './Components/Product';
 import Checkout from './Components/Checkout';
 import CreateUser from './Components/CreateUser';
 import Admin from './Components/Admin/Admin';
+import LoginModal from './Components/LoginModal';
 
 const BASE_URL = 'https://localhost:5001/api/';
 
 
 function App() {
+  var [showAdmin, setShowAdmin] = useState(false);
+  const [token, setToken] = useState()
   const [cart, setCart] = useState([]);
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -29,7 +31,6 @@ function App() {
       0
     );
   };
-
   useEffect(() => {
     // ++++ GET ALL CATEGORIES ++++
     axios.defaults.baseURL = BASE_URL;
@@ -51,15 +52,15 @@ function App() {
     }).catch((error) => {
       console.log(error)
     })
-
   }, [products]);
-
   return (
     <div id="wrapper">
       <Router>
         <Navigation
           baseURL={BASE_URL}
           categories={categories}
+          setShowAdmin={setShowAdmin}
+          showAdmin={showAdmin}
         />
         <div id="page-content-wrapper">
           <Switch>
@@ -88,10 +89,17 @@ function App() {
               />
             </Route>
             <Route path="/admin">
-              <Admin 
+              <Admin
                 baseURL={BASE_URL}
                 setCategories={setCategories}
                 setProducts={setProducts}
+              />
+            </Route>
+            <Route path="/login">
+              <LoginModal
+                baseURL={BASE_URL}
+                show={true}
+                setToken={setToken}
               />
             </Route>
           </Switch>
