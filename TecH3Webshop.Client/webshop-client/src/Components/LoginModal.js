@@ -23,8 +23,16 @@ export class LoginModal extends Component {
             this.setState({
                 messageComment: '',
                 messageVariant: '',
-            })
+            }, () => this.redirect())
         }, 3000)
+    }
+    redirect(){
+        if(this.props.token){
+            this.props.setLoggedIn(true)
+        }
+        else{
+            this.props.setLoggedIn(false) 
+        }
     }
     handleChange = e => {
         this.setState({
@@ -55,8 +63,7 @@ export class LoginModal extends Component {
             method: 'POST',
             data: this.state.userCredentials
         }).then(response => {
-            console.log(response)
-            if (response.status >= 200 && response.status <= 404) {
+            if (response.status >= 200 && response.status <= 400) {
                 this.handleAlert('Login successfull!', 'success')
                 this.props.setToken(response.data)
             }
