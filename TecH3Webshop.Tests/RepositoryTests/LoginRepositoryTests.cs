@@ -32,17 +32,8 @@ namespace TecH3Webshop.Tests.RepositoryTests
                 Password = "123456",
                 FirstName = "Emil",
                 LastName = "Godtfredsen",
-                Role = 10,
-                Address =
-                {
-                    Id = 1,
-                    Street = "Porsevænget",
-                    House = "47",
-                    Zipcode = 2800,
-                    City = "Kgs. Lyngby",
-                    Country = "Danmark"
-                }
-            }); ;
+                Role = 10
+            });
             _context.Logins.Add(new Login
             {
                 Id = 2,
@@ -50,17 +41,8 @@ namespace TecH3Webshop.Tests.RepositoryTests
                 Password = "123456",
                 FirstName = "Emil",
                 LastName = "Godtfredsen",
-                Role = 10,
-                Address =
-                {
-                    Id = 2,
-                    Street = "Porsevænget",
-                    House = "47",
-                    Zipcode = 2800,
-                    City = "Kgs. Lyngby",
-                    Country = "Danmark"
-                }
-            }); ;
+                Role = 10              
+            });
             _context.Logins.Add(new Login
             {
                 Id = 3,
@@ -68,17 +50,8 @@ namespace TecH3Webshop.Tests.RepositoryTests
                 Password = "123456",
                 FirstName = "Emil",
                 LastName = "Godtfredsen",
-                Role = 10,
-                Address =
-                {
-                    Id = 3,
-                    Street = "Porsevænget",
-                    House = "47",
-                    Zipcode = 2800,
-                    City = "Kgs. Lyngby",
-                    Country = "Danmark"
-                }
-            }); ;
+                Role = 10               
+            });
 
             _context.SaveChanges();
             
@@ -122,21 +95,35 @@ namespace TecH3Webshop.Tests.RepositoryTests
                 Password = "123456",
                 FirstName = "Jim",
                 LastName = "Daggerthuggert",
-                Role = 10,
-                Address =
-                {
-                    Id = 4,
-                    Street = "ToBackTotheFromTime",
-                    House = "66",
-                    Zipcode = 2860,
-                    City = "Søborg",
-                    Country = "Danmark"
-                }
+                Role = 10
             }); ;
             // Assert
             Assert.NotNull(login);
 
             Assert.NotEqual(DateTime.MinValue, login.CreatedAt);
+        }
+        [Fact]
+        public async Task CreateLoginWithUniqueEmail_ShouldThrowException_IfEmailAlreadyExist()
+        {
+            // Arrange
+            LoginRepository loginRepository = new LoginRepository(_context);
+
+            // Act
+            Func<Task> act = async () => await loginRepository.Create(new Login
+            {
+                Email = "emil@hotmail.com",
+                Password = "123456",
+                FirstName = "Jim",
+                LastName = "Daggerthuggert",
+                Role = 10
+            });
+
+            // Assert
+
+            var exception = await Assert.ThrowsAsync<InvalidOperationException>(act);
+            Assert.NotNull(exception);
+            Assert.IsType<InvalidOperationException>(exception);
+
         }
         [Fact]
         public async Task UpdateLogin_ShouldReturnUpdatedLogin_WhenUpdateAt_IsNotNull()

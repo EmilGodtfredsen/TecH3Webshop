@@ -16,10 +16,11 @@ namespace TecH3Webshop.Tests.ControllerTests
     {
         private readonly LoginController _sut;
         private readonly Mock<ILoginService> _loginServiceMock = new();
+        private readonly Mock<IJwtAuthenticationService> _jwtAuthenticationMock = new();
 
         public LoginControllerTest()
         {
-            _sut = new LoginController(_loginServiceMock.Object);
+            _sut = new LoginController(_loginServiceMock.Object, _jwtAuthenticationMock.Object);
         }
 
         [Fact]
@@ -80,16 +81,7 @@ namespace TecH3Webshop.Tests.ControllerTests
                 Password = "123456",
                 FirstName = "Emil",
                 LastName = "Godtfredsen",
-                Role = 10,
-                Address =
-                {
-                    Id = 1,
-                    Street = "Porsevænget",
-                    House = "47",
-                    Zipcode = 2800,
-                    City = "Kgs. Lyngby",
-                    Country = "Danmark"
-                }
+                Role = 10
             };
             _loginServiceMock
                .Setup(x => x.GetByEmail(mockLogin.Email))
@@ -111,16 +103,7 @@ namespace TecH3Webshop.Tests.ControllerTests
                 Password = "123456",
                 FirstName = "Emil",
                 LastName = "Godtfredsen",
-                Role = 10,
-                Address =
-                {
-                    Id = 1,
-                    Street = "Porsevænget",
-                    House = "47",
-                    Zipcode = 2800,
-                    City = "Kgs. Lyngby",
-                    Country = "Danmark"
-                }
+                Role = 10
             };
             _loginServiceMock
                .Setup(x => x.GetByEmail(mockLogin.Email))
@@ -142,16 +125,7 @@ namespace TecH3Webshop.Tests.ControllerTests
                 Password = "123456",
                 FirstName = "Emil",
                 LastName = "Godtfredsen",
-                Role = 10,
-                Address =
-                {
-                    Id = 1,
-                    Street = "Porsevænget",
-                    House = "47",
-                    Zipcode = 2800,
-                    City = "Kgs. Lyngby",
-                    Country = "Danmark"
-                }
+                Role = 10
             };
             _loginServiceMock
                .Setup(x => x.Create(mockLogin))
@@ -199,16 +173,7 @@ namespace TecH3Webshop.Tests.ControllerTests
                 Password = "123456",
                 FirstName = "Emil",
                 LastName = "Godtfredsen",
-                Role = 10,
-                Address =
-                {
-                    Id = 1,
-                    Street = "Porsevænget",
-                    House = "47",
-                    Zipcode = 2800,
-                    City = "Kgs. Lyngby",
-                    Country = "Danmark"
-                }
+                Role = 10
             };
             _loginServiceMock
                .Setup(x => x.Update(updateEmail, mockLogin))
@@ -258,16 +223,7 @@ namespace TecH3Webshop.Tests.ControllerTests
                 Password = "123456",
                 FirstName = "Emil",
                 LastName = "Godtfredsen",
-                Role = 10,
-                Address =
-                {
-                    Id = 1,
-                    Street = "Porsevænget",
-                    House = "47",
-                    Zipcode = 2800,
-                    City = "Kgs. Lyngby",
-                    Country = "Danmark"
-                }
+                Role = 10
             };
             _loginServiceMock
                 .Setup(x => x.Delete(deleteId))
@@ -279,7 +235,7 @@ namespace TecH3Webshop.Tests.ControllerTests
             Assert.Equal(200, statusCodeResult.StatusCode);
         }
         [Fact]
-        public async Task DeleteAuthor_ShouldReturnStatusCode404NotFound_WhenAuthorIsNull()
+        public async Task DeleteLogin_ShouldReturnStatusCode404NotFound_WhenAuthorIsNull()
         {
             int deleteId = 2;
             // Arrange
