@@ -8,6 +8,8 @@ export class ProductImagesAdmin extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            messageComment: '',
+            messageVariant: '',
             imagePath: undefined,
         }
     }
@@ -18,8 +20,8 @@ export class ProductImagesAdmin extends Component {
         })
         this.timer = setTimeout(() => {
             this.setState({
-                comment: '',
-                variant: '',
+                messageComment: '',
+                messageVariant: '',
             })
         }, 3000)
     }
@@ -54,7 +56,7 @@ export class ProductImagesAdmin extends Component {
     }
     handleCloseModal = () => {
         this.setState({
-            images: undefined,
+            
         })
         this.props.closeModal()
     }
@@ -99,7 +101,6 @@ export class ProductImagesAdmin extends Component {
                                             </div>
                                             <Button
                                                 variant="danger"
-                                                type="submit"
                                                 onClick={() => this.deleteImage(i)}
                                             >
                                                 Delete <FontAwesomeIcon icon="trash-alt" fixedWidth />
@@ -131,18 +132,12 @@ export class ProductImagesAdmin extends Component {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-
-                        <Button
-                            variant='dark'
-                        >
-                            <FontAwesomeIcon icon='check' fixedWidth /> Done
-                                </Button>
                         <Button
                             variant='danger'
                             onClick={this.handleCloseModal.bind(this)}
 
                         >
-                            <FontAwesomeIcon icon='times' fixedWidth /> Cancel
+                            <FontAwesomeIcon icon='door-open' fixedWidth /> Close
                                 </Button>
                     </Modal.Footer>
                 </Modal>

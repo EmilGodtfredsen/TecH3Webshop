@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router';
 import { Card, Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Utils from '../Common/Utils';
@@ -21,14 +22,23 @@ export class Admin extends Component {
             brands: undefined,
             productImagesId: '',
             product: '',
+            redirect: '',
         }
 
     }
     componentDidMount() {
-        this.getAllProducts()
-        this.getAllCategories()
-        this.getAllLogins()
-        this.getAllOrders()
+        console.log(this.props.token)
+        if (this.props.token) {
+            this.getAllProducts()
+            this.getAllCategories()
+            this.getAllLogins()
+            this.getAllOrders()
+        }
+        else{
+        this.setState({
+            redirect: '/login'
+        })
+    }
     }
 
     handleAlert = (comment, variant) => {
@@ -82,13 +92,14 @@ export class Admin extends Component {
             this.handleAlert(Utils.handleAxiosError(error, 'danger'))
         })
     }
-    getAllLogins(){
+    getAllLogins() {
         axios.defaults.baseURL = this.props.baseURL;
         axios({
             url: '/login',
             method: 'GET',
+           headers: { Authorization: `Bearer ${this.props.token}` }
         }).then(response => {
-            console.log(response)
+            console.log(response.data)
             this.setState({
                 logins: response.data
             })
@@ -110,6 +121,11 @@ export class Admin extends Component {
         })
     }
     render() {
+        if (this.state.redirect) {
+            return (
+                <Redirect to={this.state.redirect} />
+            )
+        }
         return (
             <div>
                 <Row className='mb-3'>
@@ -165,6 +181,7 @@ export class Admin extends Component {
                                 <LoginsAdmin
                                     baseURL={this.props.baseURL}
                                     logins={this.state.logins}
+                                    getLogins={this.getAllLogins.bind(this)}
                                 />
                             </Card.Body>
                         </Card>

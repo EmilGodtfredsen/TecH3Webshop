@@ -10,10 +10,24 @@ export class OrdersAdmin extends Component {
     constructor(props){
         super(props)
         this.state = {
+            messageComment: '',
+            messageVariant: '',
             order: '',
             showOrderDetailsModal: false,
         }  
     }
+    handleAlert = (comment, variant) => {
+      this.setState({
+          messageComment: comment,
+          messageVariant: variant,
+      })
+      this.timer = setTimeout(() => {
+          this.setState({
+              messageComment: '',
+              messageVariant: '',
+          })
+      }, 3000)
+  }
     getOrderDetails(id){
         axios.defaults.baseURL = this.props.baseURL;
         axios({

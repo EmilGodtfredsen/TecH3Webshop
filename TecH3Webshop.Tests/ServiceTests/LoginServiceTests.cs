@@ -33,16 +33,7 @@ namespace TecH3Webshop.Tests.ServiceTests
                     Password = "123456",
                     FirstName = "Emil",
                     LastName = "Godtfredsen",
-                    Role = 10,
-                    Address =
-                    {
-                        Id = 1,
-                        Street = "Porsevænget",
-                        House = "47",
-                        Zipcode = 2800,
-                        City = "Kgs. Lyngby",
-                        Country = "Danmark"
-                    }
+                    Role = 10
                 },
                 new Login
                 {
@@ -51,16 +42,7 @@ namespace TecH3Webshop.Tests.ServiceTests
                     Password = "123456",
                     FirstName = "Emil2",
                     LastName = "Godtfredsen",
-                    Role = 10,
-                    Address =
-                    {
-                        Id = 2,
-                        Street = "Porsevænget",
-                        House = "47",
-                        Zipcode = 2800,
-                        City = "Kgs. Lyngby",
-                        Country = "Danmark"
-                    }
+                    Role = 10
                 },
                 new Login
                 {
@@ -69,16 +51,7 @@ namespace TecH3Webshop.Tests.ServiceTests
                     Password = "123456",
                     FirstName = "Emil3",
                     LastName = "Godtfredsen",
-                    Role = 10,
-                    Address =
-                    {
-                        Id = 3,
-                        Street = "Porsevænget",
-                        House = "47",
-                        Zipcode = 2800,
-                        City = "Kgs. Lyngby",
-                        Country = "Danmark"
-                    }
+                    Role = 10
                 }
 
             };
@@ -107,16 +80,7 @@ namespace TecH3Webshop.Tests.ServiceTests
                 Password = "123456",
                 FirstName = "Mock",
                 LastName = "Mocksen",
-                Role = 10,
-                Address =
-                    {
-                        Id = 5,
-                        Street = "Porsevænget",
-                        House = "47",
-                        Zipcode = 2800,
-                        City = "Kgs. Lyngby",
-                        Country = "Danmark"
-                    }
+                Role = 10
             };
 
             _loginRepositoryMock
@@ -152,16 +116,7 @@ namespace TecH3Webshop.Tests.ServiceTests
                 FirstName = "Mock",
                 LastName = "Mocksen",
                 Role = 10,
-                CreatedAt = DateTime.Now,
-                Address =
-                    {
-                        Id = 5,
-                        Street = "Porsevænget",
-                        House = "47",
-                        Zipcode = 2800,
-                        City = "Kgs. Lyngby",
-                        Country = "Danmark"
-                    }
+                CreatedAt = DateTime.Now
             };
 
             _loginRepositoryMock
@@ -188,16 +143,7 @@ namespace TecH3Webshop.Tests.ServiceTests
                 Password = "123456",
                 FirstName = "Mock",
                 LastName = "Mocksen",
-                Role = 10,
-                Address =
-                    {
-                        Id = 5,
-                        Street = "Porsevænget",
-                        House = "47",
-                        Zipcode = 2800,
-                        City = "Kgs. Lyngby",
-                        Country = "Danmark"
-                    }
+                Role = 10
             };
 
             _loginRepositoryMock
@@ -221,16 +167,7 @@ namespace TecH3Webshop.Tests.ServiceTests
                 Password = "123456",
                 FirstName = "Mock",
                 LastName = "Mocksen",
-                Role = 10,
-                Address =
-                    {
-                        Id = 5,
-                        Street = "Porsevænget",
-                        House = "47",
-                        Zipcode = 2800,
-                        City = "Kgs. Lyngby",
-                        Country = "Danmark"
-                    }
+                Role = 10
             };
 
             _loginRepositoryMock

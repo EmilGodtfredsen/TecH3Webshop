@@ -1,22 +1,25 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TecH3Webshop.Api.Domain;
 using TecH3Webshop.Api.Services;
 
+
 namespace TecH3Webshop.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
         private readonly ILoginService _loginService;
-        public LoginController(ILoginService loginService)
+        private readonly IJwtAuthenticationService _jwtAuthenticationService;
+        public LoginController(ILoginService loginService, IJwtAuthenticationService jwtAuthenticationService)
         {
             _loginService = loginService;
+            _jwtAuthenticationService = jwtAuthenticationService;
         }
 
         // GET /api/login
@@ -68,9 +71,39 @@ namespace TecH3Webshop.Api.Controllers
                 return Problem(e.Message);
             }
         }
+        [AllowAnonymous]
+        [HttpPost("Authenticate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Authenticate([FromBody] UserCred login)
+        {
+            var user = await _loginService.GetByEmail(login.userName);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                if (login.password != user.Password)
+                {
+                    return Unauthorized();
+                }
+                else
+                {
+                    var token = _jwtAuthenticationService.Authenticate(user);
+                    if (token == null)
+                    {
+                        return Unauthorized();
+                    }
+                    return Ok(token);
+                }
+            }
+        }
+
 
         // POST /api/login
-
+        [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -80,7 +113,7 @@ namespace TecH3Webshop.Api.Controllers
         {
             try
             {
-                if(login == null)
+                if (login == null)
                 {
                     return BadRequest("Failed to create login!");
                 }
@@ -90,7 +123,7 @@ namespace TecH3Webshop.Api.Controllers
             catch (Exception e)
             {
                 return Problem(e.Message);
-            } 
+            }
         }
 
         // PUT (email) /api/login
@@ -105,7 +138,7 @@ namespace TecH3Webshop.Api.Controllers
             try
             {
                 var updateLogin = await _loginService.Update(email, login);
-                if(updateLogin == null)
+                if (updateLogin == null)
                 {
                     return NotFound("It was not possible to edit this login! Not Found");
                 }
@@ -129,7 +162,7 @@ namespace TecH3Webshop.Api.Controllers
             try
             {
                 var deleteLogin = await _loginService.Delete(id);
-                if(deleteLogin == null)
+                if (deleteLogin == null)
                 {
                     return NotFound("User with id: " + id + " does not exist!");
                 }
@@ -138,7 +171,12 @@ namespace TecH3Webshop.Api.Controllers
             catch (Exception e)
             {
                 return Problem(e.Message);
-            } 
+            }
         }
+    }
+    public class UserCred
+    {
+        public string userName { get; set; }
+        public string password { get; set; }
     }
 }

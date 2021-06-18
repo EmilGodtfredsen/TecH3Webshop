@@ -16,6 +16,14 @@ export class CategoriesAdmin extends Component {
             messageComment: '',
             messageVariant: '',
             newCategory: '',
+            categories: '',
+        }
+    }
+    componentDidUpdate(prevProps) {
+        if(this.props.categories !== prevProps.categories){
+            this.setState({
+                categories: this.props.categories
+            })
         }
     }
     handleAlert = (comment, variant) => {
@@ -45,22 +53,22 @@ export class CategoriesAdmin extends Component {
                 "name": this.state.newCategory,
             }
         }).then(response => {
-            console.log(response.data)
+            this.props.getCategories()
         }).catch((error) => {
             this.handleAlert(Utils.handleAxiosError(error), 'danger')
         })
     }
     deleteClicked(id) {
         axios.defaults.baseURL = this.props.baseURL;
-        if(window.confirm('Delete category?'))
-        axios({
-            url: '/category/' + id,
-            method: 'DELETE',
-        }).then(response => {
-            this.props.getCategories()
-        }).catch((error) => {
-            this.handleAlert(Utils.handleAxiosError(error), 'danger')
-        })
+        if (window.confirm('Delete category?'))
+            axios({
+                url: '/category/' + id,
+                method: 'DELETE',
+            }).then(response => {
+                this.props.getCategories()
+            }).catch((error) => {
+                this.handleAlert(Utils.handleAxiosError(error), 'danger')
+            })
 
     }
     handleUpdate = (newValue, id) => {
@@ -86,85 +94,91 @@ export class CategoriesAdmin extends Component {
 
 
     render() {
-        const data = _.sortBy(this.props.categories, ['name'])
-        const cellEdit = cellEditFactory({
-            mode: 'click',
-            blurToSave: true,
-            beforeSaveCell: (oldValue, newValue, row, column) => {
-                if (oldValue !== newValue) {
-                    this.handleUpdate(newValue, row.id)
+        if (this.state.categories === '' || this.state.categories === undefined) {
+            return (
+                <div className="text-muted"><FontAwesomeIcon icon="box-open" /> No data yet</div>
+            )
+        }
+        else {
+            const data = _.sortBy(this.state.categories, ['name'])
+            const cellEdit = cellEditFactory({
+                mode: 'click',
+                blurToSave: true,
+                beforeSaveCell: (oldValue, newValue, row, column) => {
+                    if (oldValue !== newValue) {
+                        this.handleUpdate(newValue, row.id)
+                    }
                 }
-            }
-        })
+            })
 
-        const columns = [{
-            dataField: 'id',
-            text: 'ID',
-            hidden: true
-        },
-        {
-            dataField: 'name',
-            text: 'Category'
-        },
-        {
-            dataField: "action",
-            text: "",
-            isDummyField: true,
-            editable: false,
-            align: 'right',
-            formatter: (cellContent, row) => {
-                return (
-                    <Button
-                        size="sm"
-                        variant="danger"
-                        onClick={() => this.deleteClicked(row.id)
-                        }
-                    >
-                        <FontAwesomeIcon icon="trash-alt" fixedWidth />
-                    </Button>
-                )
-            }
-        }]
+            const columns = [{
+                dataField: 'id',
+                text: 'ID',
+                hidden: true
+            },
+            {
+                dataField: 'name',
+                text: 'Category'
+            },
+            {
+                dataField: "action",
+                text: "",
+                isDummyField: true,
+                editable: false,
+                align: 'right',
+                formatter: (cellContent, row) => {
+                    return (
+                        <Button
+                            size="sm"
+                            variant="danger"
+                            onClick={() => this.deleteClicked(row.id)
+                            }
+                        >
+                            <FontAwesomeIcon icon="trash-alt" fixedWidth />
+                        </Button>
+                    )
+                }
+            }]
 
-        return (
+            return (
 
-            <div>
-                <BootstrapTable
-                    keyField="id"
-                    data={data}
-                    columns={columns}
-                    cellEdit={cellEdit}
-                    classes="table table-striped table-hover table-borderless"
-                    headerWrapperClasses="title"
-                    condensed
-                    noDataIndication={() => <div className="text-muted"><FontAwesomeIcon icon="box-open" /> No data yet</div>}
-                />
-                <Form>
-                    <Form.Row>
-                        <Form.Group as={Col}>
-                            <Form.Control
-                                value={this.state.newCategory}
-                                type="text"
-                                onChange={this.handleChange.bind(this)}
-                                placeholder="Enter New Category">
-                            </Form.Control>
-                        </Form.Group>
-                        <Form.Group as={Col}>
-                            <Button
-                                id="addPrefix"
-                                variant="success"
-                                type="submit"
-                                onClick={() => this.createNewCategory()}
-                            >
-                                Add <FontAwesomeIcon icon="plus" fixedWidth />
-                            </Button>
-                        </Form.Group>
-                    </Form.Row>
-                </Form>
-            </div>
+                <div>
+                    <BootstrapTable
+                        keyField="id"
+                        data={data}
+                        columns={columns}
+                        cellEdit={cellEdit}
+                        classes="table table-striped table-hover table-borderless"
+                        headerWrapperClasses="title"
+                        condensed
+                        noDataIndication={() => <div className="text-muted"><FontAwesomeIcon icon="box-open" /> No data yet</div>}
+                    />
+                    <Form>
+                        <Form.Row>
+                            <Form.Group as={Col}>
+                                <Form.Control
+                                    value={this.state.newCategory}
+                                    type="text"
+                                    onChange={this.handleChange.bind(this)}
+                                    placeholder="Enter New Category">
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group as={Col}>
+                                <Button
+                                    id="addPrefix"
+                                    variant="success"
+                                    onClick={() => this.createNewCategory()}
+                                >
+                                    Add <FontAwesomeIcon icon="plus" fixedWidth />
+                                </Button>
+                            </Form.Group>
+                        </Form.Row>
+                    </Form>
+                </div>
 
-        )
+            )
 
+        }
     }
 }
 
