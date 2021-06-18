@@ -23,7 +23,7 @@ export default class Checkout extends Component {
     componentDidMount() {
         this.setState({
             cart: JSON.parse(localStorage.getItem('cart')),
-        }, () => this.parseJwt())
+        })
     }
     handleAlert = (comment, variant) => {
         this.setState({
@@ -36,9 +36,6 @@ export default class Checkout extends Component {
                 messageVariant: '',
             })
         }, 3000)
-    }
-    parseJwt() {
-        console.log(this.props.token)
     }
     // ++++ Update amount of each item i cart ++++
     handleChange(i, e){ 

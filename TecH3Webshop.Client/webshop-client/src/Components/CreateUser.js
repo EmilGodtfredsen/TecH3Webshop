@@ -49,7 +49,7 @@ export default class CreateUser extends Component {
                 lastName: this.state.lastName,
                 role: 0
             }
-        })
+        }, () => this.createUser())
     }
     createUser(){
         axios.defaults.baseURL = this.props.baseURL;
@@ -58,10 +58,11 @@ export default class CreateUser extends Component {
             method: 'POST',
             data: this.state.newLogin
         }).then(response => {
-            if (response.status >= 200 && response.status <= 400) {
-                this.handleAlert('Login successfull!', 'success')
-                this.props.setToken(response.data)
-            }
+            console.log(response.data)
+            // if (response.status >= 200 && response.status <= 400) {
+            //     this.handleAlert('Login successfull!', 'success')
+            //     this.props.setToken(response.data)
+            // }
         }).catch(error => {
             this.handleAlert(error, 'danger')
         })

@@ -17,13 +17,14 @@ const BASE_URL = 'https://localhost:5001/api/';
 
 function App() {
   let history = useHistory();
-  var [showAdmin, setShowAdmin] = useState(false);
-  var [token, setToken] = useState();
+  var [showAdmin, setShowAdmin] = useState(true);
+  const [token, setToken] = useState();
   var [showLoginModal, setShowLoginModal] = useState(true);
   const [loggedIn, setLoggedIn] = useState();
   const [cart, setCart] = useState([]);
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
+
   const getCartTotal = () => {
     return cart.reduce(
       (sum, { quantity }) => sum + quantity,
@@ -34,16 +35,6 @@ function App() {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart])
   useEffect(() => {
-    // ++++ GET ALL CATEGORIES ++++
-    axios.defaults.baseURL = BASE_URL;
-    axios({
-      url: '/category',
-      method: 'GET',
-    }).then(response => {
-      setCategories(response.data)
-    }).catch((error) => {
-      console.log(error)
-    })
     // ++++ GET ALL PRODUCTS ++++
     axios.defaults.baseURL = BASE_URL;
     axios({
@@ -55,6 +46,18 @@ function App() {
       console.log(error)
     })
   }, [products]);
+  useEffect(() => {
+    // ++++ GET ALL CATEGORIES ++++
+    axios.defaults.baseURL = BASE_URL;
+    axios({
+      url: '/category',
+      method: 'GET',
+    }).then(response => {
+      setCategories(response.data)
+    }).catch((error) => {
+      console.log(error)
+    })
+  }, [categories])
   return (
     <div id="wrapper">
       <Router>
@@ -97,6 +100,7 @@ function App() {
                 baseURL={BASE_URL}
                 setCategories={setCategories}
                 setProducts={setProducts}
+                token={token}
               />
             </Route>
             <Route path="/login">

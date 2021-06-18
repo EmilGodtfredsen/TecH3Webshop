@@ -115,6 +115,8 @@ namespace TecH3Webshop.Api
 
             app.UseCors(MyAllowSpecificOrigins);
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

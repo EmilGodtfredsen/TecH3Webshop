@@ -103,7 +103,7 @@ namespace TecH3Webshop.Api.Controllers
 
 
         // POST /api/login
-
+        [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

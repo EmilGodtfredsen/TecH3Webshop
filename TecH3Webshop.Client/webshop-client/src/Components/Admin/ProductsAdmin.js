@@ -37,7 +37,6 @@ export class ProductsAdmin extends Component {
         this.getAllBrands()
         this.getAllCategories()
     }
-
     handleAlert = (comment, variant) => {
         this.setState({
             messageComment: comment,
@@ -45,8 +44,8 @@ export class ProductsAdmin extends Component {
         })
         this.timer = setTimeout(() => {
             this.setState({
-                comment: '',
-                variant: '',
+                messageComment: '',
+                messageVariant: '',
             })
         }, 3000)
     }

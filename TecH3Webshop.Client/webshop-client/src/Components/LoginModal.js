@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import Utils from './Common/Utils';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -63,12 +64,12 @@ export class LoginModal extends Component {
             method: 'POST',
             data: this.state.userCredentials
         }).then(response => {
-            if (response.status >= 200 && response.status <= 400) {
+            if (response.status >= 200 && response.status <= 401) {
                 this.handleAlert('Login successfull!', 'success')
                 this.props.setToken(response.data)
             }
         }).catch(error => {
-            this.handleAlert(error, 'danger')
+            this.handleAlert(Utils.handleAxiosError(error), 'danger')
         })
     }
     render() {
